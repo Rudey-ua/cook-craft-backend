@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthorizationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use F9Web\ApiResponseHelpers;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +24,9 @@ Route::controller(AuthorizationController::class)->group(function () {
 
 Route::group(['middleware' => ['auth:sanctum']],  function() {
 
-    Route::get('/test', function () {
-        return response()->json(['message' => 'Debug successful from SANCTUM']);
+    Route::get('/member/profile', function (Request $request) {
+        return response()->json([
+            'member' => $request->user()
+        ]);
     });
 });
