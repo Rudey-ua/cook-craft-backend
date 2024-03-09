@@ -10,7 +10,7 @@ class SubscriptionRepository
     {
         return Subscription::where('user_id', $userId)
             ->where('is_active', true)
-            ->where('end_date', '>', now())
+            ->where('expired_date', '>', now())
             ->first();
     }
 }

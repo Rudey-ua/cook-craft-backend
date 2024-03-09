@@ -44,10 +44,8 @@ class SubscriptionController extends Controller
     private function extractRequestData($request)
     {
         return [
-            'subscriptionId' => $request->validated()['subscriptionId'] ?? null,
             'paymentMethod' => $request->validated()['paymentMethod'],
             'planId' => $request->validated()['planId'] ?? null,
-            'reason' => $request->validated()['reason'] ?? null
         ];
     }
 }

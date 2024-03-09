@@ -31,4 +31,21 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'paypal' => [
+        'client_id' => env('PAYPAL_CLIENT_ID'),
+        'secret' => env('PAYPAL_SECRET'),
+        'base_url' => env('PAYPAL_BASE_URL'),
+        'settings' => [
+            'image_url' => 'https://canteen-app.pp.ua/',
+            'home_url' => 'https://canteen-app.pp.ua/',
+        ],
+        'redirect_url' => [
+            'return_url' => env('APP_URL') . "/api/callback/payment/paypal",
+            'cancel_url' => env('APP_URL')
+        ],
+        'country_codes' => [
+            'US' => 'en-US',
+            'IL' => 'he-IL',
+        ],
+    ],
 ];

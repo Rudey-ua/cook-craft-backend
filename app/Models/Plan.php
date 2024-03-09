@@ -14,4 +14,13 @@ class Plan extends Model
         'price',
         'type'
     ];
+
+    protected $casts = [
+        'price' => 'array',
+    ];
+
+    public function getPriceInCurrency(string $currency)
+    {
+        return $this->price[$currency] ?? null;
+    }
 }

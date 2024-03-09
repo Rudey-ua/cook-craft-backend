@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthorizationController;
+use App\Http\Controllers\API\PaymentCallbackController;
 use App\Http\Controllers\API\SubscriptionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,10 +29,12 @@ Route::group(['middleware' => ['auth:sanctum']],  function() {
         Route::post('/subscription', 'createSubscription');
     });
 
-
     Route::get('/member/profile', function (Request $request) {
         return response()->json([
             'member' => $request->user()
         ]);
     });
 });
+
+Route::any('/callback/payment/{service}', PaymentCallbackController::class);
+
