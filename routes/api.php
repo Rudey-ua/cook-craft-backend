@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\AuthorizationController;
+use App\Http\Controllers\API\AuthorizationController;
+use App\Http\Controllers\API\SubscriptionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use F9Web\ApiResponseHelpers;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +23,11 @@ Route::controller(AuthorizationController::class)->group(function () {
 });
 
 Route::group(['middleware' => ['auth:sanctum']],  function() {
+
+    Route::controller(SubscriptionController::class)->group(function () {
+        Route::post('/subscription', 'createSubscription');
+    });
+
 
     Route::get('/member/profile', function (Request $request) {
         return response()->json([
