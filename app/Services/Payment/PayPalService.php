@@ -207,29 +207,40 @@ class PayPalService implements PaymentProviderInterface
         });
     }
 
-    public function handleWebhook(Request $request): JsonResponse
+    public function renewSubscription(string $paypalSubscriptionId): void
     {
-        try {
-            $subscriptionId = $request->input('resource.id');
-
-            switch ($request->input('event_type')) {
-                case config('payments.paypal.events.activated'):
-                    $this->activateSubscription($request);
-                    break;
-                case config('payments.paypal.events.payment_completed'):
-                    $this->renewSubscription($request->input('resource.billing_agreement_id'));
-                    break;
-                case config('payments.paypal.events.cancelled'):
-                    $this->subscriptionRepository->cancelPayPalSubscription($subscriptionId);
-                    break;
-            }
-        } catch (\Exception $e) {
-            Log::error("Failed to handle webhook: " . $e->getMessage());
-            return $this->respondError($e->getMessage());
+        if (is_null($subscription = Subscription::where('provider_subscription_id', $paypalSubscriptionId)->first())) {
+            Log::channel('subscription')->warning("Subscription not found for PayPal ID: {$paypalSubscriptionId}");
+            return;
         }
-        return $this->respondWithSuccess([
-            'message' => __('Webhook has been received')
-        ]);
+        $subscriptionData = $this->getSubscriptionData($paypalSubscriptionId);
+
+        if (!empty($subscriptionData['billing_info']['cycle_executions'])) {
+            $cycleExecutions = $subscriptionData['billing_info']['cycle_executions'][0];
+            if (isset($cycleExecutions['cycles_completed'])){
+                if ($cycleExecutions['cycles_completed'] > 1) {
+                    //Renewal PayPal subscription
+                    $this->subscriptionRepository->renewSubscription($subscription);
+
+                    //Store payment information regarding last transaction
+                    $this->paymentRepository->create(
+                        new PaymentData(
+                            userId:  $subscription->user_id,
+                            modelId: $subscription->id,
+                            modelType: Subscription::class,
+                            paymentMethod: config('payments.payment_methods.paypal'),
+                            transactionData: json_encode($subscriptionData),
+                            paymentDate: Carbon::parse($subscriptionData['billing_info']['last_payment']['time'])->format('Y-m-d H:i:s'),
+                            amount: $subscriptionData['billing_info']['last_payment']['amount']['value'],
+                            currency: $subscriptionData['billing_info']['last_payment']['amount']['currency_code'],
+                            status: $subscriptionData['status'] == 'ACTIVE' ?
+                                config('payments.transaction_statuses.completed') :
+                                config('payments.transaction_statuses.pending'),
+                        )
+                    );
+                }
+            }
+        }
     }
 
     public function getSubscriptionData($subscriptionId) : array
@@ -265,5 +276,30 @@ class PayPalService implements PaymentProviderInterface
     public function getSubscriptionPrice(Plan $plan, $paymentProvider) : int
     {
         return $plan->getPriceInCurrency($this->detectCurrencyCode($paymentProvider));
+    }
+
+    public function handleWebhook(Request $request): JsonResponse
+    {
+        try {
+            $subscriptionId = $request->input('resource.id');
+
+            switch ($request->input('event_type')) {
+                case config('payments.paypal.events.activated'):
+                    $this->activateSubscription($request);
+                    break;
+                case config('payments.paypal.events.payment_completed'):
+                    $this->renewSubscription($request->input('resource.billing_agreement_id'));
+                    break;
+                case config('payments.paypal.events.cancelled'):
+                    $this->subscriptionRepository->cancelPayPalSubscription($subscriptionId);
+                    break;
+            }
+        } catch (\Exception $e) {
+            Log::error("Failed to handle webhook: " . $e->getMessage());
+            return $this->respondError($e->getMessage());
+        }
+        return $this->respondWithSuccess([
+            'message' => __('Webhook has been received')
+        ]);
     }
 }

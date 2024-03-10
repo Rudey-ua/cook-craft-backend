@@ -25,7 +25,7 @@ class SubscriptionController extends Controller
 
         try {
             if (!is_null($this->subscriptionRepository->getActiveSubscription(Auth::id()))) {
-                return throw new \Exception(__("You already have active subscription!"));
+                return throw new \Exception(__("You already have an active subscription!"));
             }
             $paymentProvider = PaymentProviderFactory::create($data['paymentMethod']);
             $subscriptionData = $paymentProvider->createSubscription($data['planId']);

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class PaymentCallbackController extends Controller
+class PaymentWebhookController extends Controller
 {
     public function __invoke($service, Request $request)
     {
@@ -15,6 +15,6 @@ class PaymentCallbackController extends Controller
         }
 
         $serviceHandler = app($services[$service]);
-        return $serviceHandler->activateSubscription($request);
+        return $serviceHandler->handleWebhook($request);
     }
 }
