@@ -30,12 +30,6 @@ Route::group(['middleware' => ['auth:sanctum']],  function() {
         Route::post('/subscription', 'createSubscription');
         Route::post('/subscription/cancel', 'cancelSubscription');
     });
-
-    Route::get('/member/profile', function (Request $request) {
-        return response()->json([
-            'member' => $request->user()
-        ]);
-    });
 });
 
 Route::any('/webhooks/payment/{service}', PaymentWebhookController::class);

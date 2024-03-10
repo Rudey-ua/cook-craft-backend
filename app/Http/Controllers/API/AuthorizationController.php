@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
+use App\DataTransferObjects\UserData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
-use App\Models\User;
-use App\Models\UserDetails;
+use App\Repositories\UserRepository;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,30 +15,31 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthorizationController extends Controller
 {
+    public function __construct(protected  UserRepository $userRepository)
+    {
+    }
+
     use ApiResponseHelpers;
     public function register(RegisterRequest $request) : JsonResponse
     {
         return DB::transaction(function () use ($request) {
             $validated = $request->validated();
 
-            $user = User::create([
-                'firstname' => $validated['firstName'],
-                'lastname' => $validated['lastName'],
-                'email' => $validated['email'],
-                'password' => Hash::make($validated['password']),
-            ]);
-
-            UserDetails::updateOrCreate([
-                'user_id' => $user->id,
-            ], [
-                'birth_date' => $validated['birthDate'],
-                'gender' => $validated['gender'],
-            ]);
+            $user = $this->userRepository->create(
+                new UserData(
+                    firstName: $validated['firstName'],
+                    lastName: $validated['lastName'],
+                    email: $validated['email'],
+                    password: $validated['password'],
+                    birthDate: $validated['birthDate'],
+                    gender: $validated['gender']
+                )
+            );
 
             $user->assignRole(config('permission.user_roles.member'));
             $token = $user->createToken('auth_token')->plainTextToken;
 
-            return response()->json([
+            return $this->respondWithSuccess([
                 'message' => __("Registration successful!"),
                 'user' => $user,
                 'token' => $token,
@@ -49,13 +50,11 @@ class AuthorizationController extends Controller
     public function login(LoginRequest $request) : JsonResponse
     {
         $validated = $request->validated();
-
-        $user = User::where('email', $validated['email'])->first();
+        $user = $this->userRepository->getUserByEmail($validated['email']);
 
         if (!$user || !Hash::check($validated['password'], $user->password)) {
             return $this->respondUnAuthenticated(__("The provided credentials are incorrect."));
         }
-
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
