@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Plans extends Model
+class Plan extends Model
 {
     use HasFactory;
 
@@ -14,4 +14,13 @@ class Plans extends Model
         'price',
         'type'
     ];
+
+    protected $casts = [
+        'price' => 'array',
+    ];
+
+    public function getPriceInCurrency(string $currency)
+    {
+        return $this->price[$currency] ?? null;
+    }
 }
