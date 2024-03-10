@@ -9,7 +9,7 @@ class PaymentCallbackController extends Controller
 {
     public function __invoke($service, Request $request)
     {
-        $services = config('payments.payment_methods');
+        $services = config('payments.payment_instance');
         if (!array_key_exists($service, $services)) {
             return response()->json(['message' => 'Unknown service'], 404);
         }

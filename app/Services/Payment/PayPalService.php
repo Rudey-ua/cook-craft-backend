@@ -2,25 +2,31 @@
 
 namespace App\Services\Payment;
 
+use App\DataTransferObjects\PaymentData;
+use App\DataTransferObjects\SubscriptionData;
+use App\DataTransferObjects\SubscriptionDates;
 use App\Interfaces\PaymentProviderInterface;
 use App\Models\Plan;
 use App\Models\Subscription;
+use App\Repositories\PaymentRepository;
 use App\Repositories\SubscriptionRepository;
 use App\Repositories\UserRepository;
 use Carbon\Carbon;
+use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 
 class PayPalService implements PaymentProviderInterface
 {
+    use ApiResponseHelpers;
     public function __construct(
         protected SubscriptionRepository $subscriptionRepository,
-        protected UserRepository $userRepository
+        protected UserRepository $userRepository,
+        protected PaymentRepository $paymentRepository
     )
     {
         $this->PAYPAL_CLIENT_ID = config('services.paypal.client_id');
@@ -152,19 +158,6 @@ class PayPalService implements PaymentProviderInterface
 
     }
 
-    public function getSubscriptionData($subscriptionId) : array
-    {
-        $response = Http::withToken($this->getAccessToken())
-            ->asJson()
-            ->get("$this->PAYPAL_BASE_URL/v1/billing/subscriptions/$subscriptionId");
-
-        if (!$response->successful()) {
-            Log::channel('subscription')->error('Failed to get subscription data:' . $response->body());
-            throw new \Exception("Failed to get subscription data: " . $response->body());
-        }
-        return $response->json();
-    }
-
     public function activateSubscription(Request $request): void
     {
         $subscriptionId = $request->input('subscription_id') ?? $request->input('resource.id');
@@ -186,9 +179,8 @@ class PayPalService implements PaymentProviderInterface
                         type: config('subscription.types.monthly'),
                         isActive: $subscriptionData['status'] === 'ACTIVE',
                         isCanceled: false,
-                        isPaused: false,
                         startDate: $dates->startDate,
-                        endDate: $dates->endDate,
+                        expiredDate: $dates->endDate,
                         providerName: config('payments.payment_methods.paypal'),
                         providerSubscriptionId: $subscriptionData['id'],
                         renewalCount: 0,
@@ -200,19 +192,17 @@ class PayPalService implements PaymentProviderInterface
                         userId:  $user->id,
                         modelId: $subscription->id,
                         modelType: Subscription::class,
+                        paymentMethod: config('payments.payment_methods.paypal'),
+                        transactionData: json_encode($subscriptionData),
+                        paymentDate: Carbon::parse($subscriptionData['billing_info']['last_payment']['time'])->format('Y-m-d H:i:s'),
+                        amount: $subscriptionData['billing_info']['last_payment']['amount']['value'],
+                        currency: $subscriptionData['billing_info']['last_payment']['amount']['currency_code'],
                         status: $subscriptionData['status'] == 'ACTIVE' ?
                             config('payments.transaction_statuses.completed') :
                             config('payments.transaction_statuses.pending'),
-                        paymentMethod: config('payments.payment_methods.paypal'),
-                        amount: $subscriptionData['billing_info']['last_payment']['amount']['value'],
-                        currency: $subscriptionData['billing_info']['last_payment']['amount']['currency_code'],
-                        transactionData: json_encode($subscriptionData),
-                        paymentDate: Carbon::parse($subscriptionData['billing_info']['last_payment']['time'])->format('Y-m-d H:i:s')
                     )
                 );
-
-                Mail::to($user->email)->queue(new SubscriptionSuccess($user, $plan, $dates->startDate, $dates->endDate));
-                RewardTeacherForStudentsSubscription::dispatch($subscription);
+                //TODO: send mail about successful payment
             }
         });
     }
@@ -232,9 +222,6 @@ class PayPalService implements PaymentProviderInterface
                 case config('payments.paypal.events.cancelled'):
                     $this->subscriptionRepository->cancelPayPalSubscription($subscriptionId);
                     break;
-                case config('payments.paypal.events.suspended'):
-                    $this->subscriptionRepository->pausePayPalSubscription($subscriptionId);
-                    break;
             }
         } catch (\Exception $e) {
             Log::error("Failed to handle webhook: " . $e->getMessage());
@@ -245,6 +232,18 @@ class PayPalService implements PaymentProviderInterface
         ]);
     }
 
+    public function getSubscriptionData($subscriptionId) : array
+    {
+        $response = Http::withToken($this->getAccessToken())
+            ->asJson()
+            ->get("$this->PAYPAL_BASE_URL/v1/billing/subscriptions/$subscriptionId");
+
+        if (!$response->successful()) {
+            Log::channel('subscription')->error('Failed to get subscription data:' . $response->body());
+            throw new \Exception("Failed to get subscription data: " . $response->body());
+        }
+        return $response->json();
+    }
 
     public function detectCurrencyCode($paymentMethod): string
     {
@@ -252,6 +251,15 @@ class PayPalService implements PaymentProviderInterface
             case config('payments.payment_methods.paypal'):
                 return config('payments.currencies.euro');
         }
+    }
+
+    public function getSubscriptionDates(string $time): SubscriptionDates
+    {
+        //TODO: unify subscription data shift
+        $startTime = Carbon::parse($time);
+        $endTime = $startTime->copy()->addMonth();
+
+        return new SubscriptionDates($startTime->format('Y-m-d'), $endTime->format('Y-m-d'));
     }
 
     public function getSubscriptionPrice(Plan $plan, $paymentProvider) : int
