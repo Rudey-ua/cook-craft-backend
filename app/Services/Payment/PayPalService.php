@@ -148,14 +148,16 @@ class PayPalService implements PaymentProviderInterface
         ];
     }
 
-    public function scheduleCancelSubscription(string $reason): void
+    public function cancelSubscription(Subscription $subscription, $cancelReason = null): void
     {
-
-    }
-
-    public function performCancelSubscription(Subscription $subscription)
-    {
-
+        $response = Http::withToken($this->getAccessToken())
+            ->asJson()
+            ->post("$this->PAYPAL_BASE_URL/v1/billing/subscriptions/{$subscription->provider_subscription_id}/cancel", [
+                'reason' => $cancelReason
+            ]);
+        if (!$response->successful()) {
+            throw new \Exception("Failed to cancel subscription: " . $response->body());
+        }
     }
 
     public function activateSubscription(Request $request): void

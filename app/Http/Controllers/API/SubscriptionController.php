@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CancelSubscriptionRequest;
 use App\Http\Requests\CreateSubscriptionRequest;
 use App\Repositories\SubscriptionRepository;
 use App\Services\Payment\PaymentProviderFactory;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -41,11 +41,32 @@ class SubscriptionController extends Controller
         ]);
     }
 
+    public function cancelSubscription(CancelSubscriptionRequest $request): JsonResponse
+    {
+        $data = $this->extractRequestData($request);
+
+        if (is_null($subscription = $this->subscriptionRepository->getActiveSubscription(Auth::id()))) {
+            return $this->respondNotFound("You don't have an active subscription!");
+        }
+        try {
+            $paymentProvider = PaymentProviderFactory::create($data['paymentMethod']);
+            $paymentProvider->cancelSubscription($subscription, $data['reason']);
+        } catch (\Exception $e) {
+            Log::error('Subscription error: ' . $e->getMessage());
+            return $this->respondError($e->getMessage());
+        }
+        return $this->respondWithSuccess([
+            'message' => __('Subscription successfully canceled!'),
+        ]);
+    }
+
+
     private function extractRequestData($request)
     {
         return [
             'paymentMethod' => $request->validated()['paymentMethod'],
             'planId' => $request->validated()['planId'] ?? null,
+            'reason' => $request->validated()['reason'] ?? null
         ];
     }
 }

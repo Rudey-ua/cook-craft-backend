@@ -3,9 +3,9 @@
 namespace App\Repositories;
 
 use App\DataTransferObjects\SubscriptionData;
-use App\Jobs\ProcessStudentAutoSchedule;
 use App\Models\Plan;
 use App\Models\Subscription;
+use App\Services\Payment\PayPalService;
 use Exception;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
@@ -82,9 +82,11 @@ class SubscriptionRepository
             ->where('expired_date', '>', now())
             ->firstOrFail();
 
-        //TODO: write cancel_reason from PayPal response
+        $subscriptionData = app(PayPalService::class)->getSubscriptionData($subscription->provider_subscription_id);
+
         $subscription->update(['is_active' => false]);
         $subscription->update(['is_canceled' => true]);
         $subscription->update(['updated_at' => now()]);
+        $subscription->update(['cancel_reason' => $subscriptionData['status_change_note']]);
     }
 }
