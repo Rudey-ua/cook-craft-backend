@@ -118,6 +118,13 @@ return [
             'replace_placeholders' => true,
         ],
 
+        'subscription' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/subscription.log'),
+            'level' => 'debug',
+            'levels' => ['debug', 'info', 'error'],
+        ],
+
         'null' => [
             'driver' => 'monolog',
             'handler' => NullHandler::class,

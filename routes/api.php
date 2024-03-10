@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AuthorizationController;
 use App\Http\Controllers\API\PaymentCallbackController;
+use App\Http\Controllers\API\PaymentWebhookController;
 use App\Http\Controllers\API\SubscriptionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,7 @@ Route::group(['middleware' => ['auth:sanctum']],  function() {
 
     Route::controller(SubscriptionController::class)->group(function () {
         Route::post('/subscription', 'createSubscription');
+        Route::post('/subscription/cancel', 'cancelSubscription');
     });
 
     Route::get('/member/profile', function (Request $request) {
@@ -36,5 +38,6 @@ Route::group(['middleware' => ['auth:sanctum']],  function() {
     });
 });
 
+Route::any('/webhooks/payment/{service}', PaymentWebhookController::class);
 Route::any('/callback/payment/{service}', PaymentCallbackController::class);
 
