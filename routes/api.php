@@ -19,9 +19,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::controller(AuthorizationController::class)->group(function () {
-    Route::post('/register', 'register');
-    Route::post('/login', 'login');
-    Route::post('logout', 'logout')->middleware('auth:sanctum');
+    Route::post('/auth/register', 'register');
+    Route::post('/auth/login', 'login');
+    Route::post('/auth/logout', 'logout')->middleware('auth:sanctum');
 });
 
 Route::group(['middleware' => ['auth:sanctum']],  function() {
@@ -29,12 +29,6 @@ Route::group(['middleware' => ['auth:sanctum']],  function() {
     Route::controller(SubscriptionController::class)->group(function () {
         Route::post('/subscription', 'createSubscription');
         Route::post('/subscription/cancel', 'cancelSubscription');
-    });
-
-    Route::get('/member/profile', function (Request $request) {
-        return response()->json([
-            'member' => $request->user()
-        ]);
     });
 });
 
