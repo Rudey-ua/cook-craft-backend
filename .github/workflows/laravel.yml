@@ -13,13 +13,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Checkout
-        run: cd /home/forge/canteen-app.pp.ua
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        working-directory: /home/forge/canteen-app.pp.ua
       - name: Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
+        working-directory: /home/forge/canteen-app.pp.ua
       - name: Pull
         run: git pull origin main
+        working-directory: /home/forge/canteen-app.pp.ua
       - name: Assets
         run: npm run build
+        working-directory: /home/forge/canteen-app.pp.ua
