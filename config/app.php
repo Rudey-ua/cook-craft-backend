@@ -186,4 +186,5 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    'geolocation_token' => env('GEOLOCATION_TOKEN')
 ];
