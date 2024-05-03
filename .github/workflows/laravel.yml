@@ -1,4 +1,4 @@
-name: Git Pull on Remote Server
+name: Laravel
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  git_pull:
+  Connect_SSH:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,4 +21,5 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /home/forge/canteen-app.pp.ua
-            git pull 
+            git checkout main
+            git pull origin main
