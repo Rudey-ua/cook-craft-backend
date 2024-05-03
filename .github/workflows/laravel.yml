@@ -1,31 +1,24 @@
-name: Laravel
+name: Git Pull on Remote Server
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
-  laravel-tests:
-
+  git_pull:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - name: Connect via SSH using SSH key
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: SSH and Run Git Pull
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.PORT }}
           script: |
-            set -e
             cd /home/forge/canteen-app.pp.ua
-            git checkout main
-            git pull origin main
-      - name: Install dependencies
-        run: npm install
-      - name: Build assets
-        run: npm run build
+            git pull 
