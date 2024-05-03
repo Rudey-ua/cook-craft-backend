@@ -13,9 +13,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Pull
+      - name: Switch to main branch
+        run: git checkout main
+      - name: Pull latest changes
         run: git pull origin main
-      - name: Vite install
+      - name: Install dependencies
         run: npm install
-      - name: Assets
+      - name: Build assets
         run: npm run build
