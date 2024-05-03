@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserDetails;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
@@ -44,10 +46,23 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        UserDetails::create([
+            'user_id' => $user->id,
+            'time_zone' => $this->determineTimeZone($request->ip()) ?? null,
+            'language' => $request->getPreferredLanguage(['en', 'ua', 'ru']) ?? null
+        ]);
+
         event(new Registered($user));
 
         Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
+    }
+
+    private function determineTimeZone($ip): ?string
+    {
+        $apiKey = config('app.geolocation_token');
+        $response = Http::get("https://api.ipgeolocation.io/timezone?apiKey={$apiKey}&ip={$ip}");
+        return $response->json()['timezone'] ?? null;
     }
 }
