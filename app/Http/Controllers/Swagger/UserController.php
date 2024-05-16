@@ -121,6 +121,54 @@ namespace App\Http\Controllers\Swagger;
  *    }
  *  )
  * /
+ *
+ * @OA\Get(
+ *       path="/api/users/profile",
+ *       summary="Retrieve user profile",
+ *       tags={"Profile"},
+ *       security={{"bearerAuth":{}}},
+ *       @OA\Response(
+ *           response=200,
+ *           description="Data successfully retrieved!",
+ *           @OA\JsonContent(
+ *               type="object",
+ *               @OA\Property(property="message", type="string", example="Data successfully retrieved!"),
+ *               @OA\Property(
+ *                   property="data", type="object",
+ *                   @OA\Property(property="id", type="integer", example=12),
+ *                   @OA\Property(property="firstname", type="string", example="Max"),
+ *                   @OA\Property(property="lastname", type="string", example="Kostenko"),
+ *                   @OA\Property(property="profile_image", type="string", example=null, nullable=true),
+ *                   @OA\Property(property="is_active", type="boolean", example=true),
+ *                   @OA\Property(
+ *                       property="userDetails", type="object",
+ *                       @OA\Property(property="birth_date", type="string", format="date", example="2002-10-11"),
+ *                       @OA\Property(property="gender", type="string", example="male"),
+ *                       @OA\Property(property="language", type="string", example=null, nullable=true),
+ *                       @OA\Property(property="time_zone", type="string", example=null, nullable=true)
+ *                   ),
+ *                   @OA\Property(
+ *                       property="role", type="array",
+ *                       @OA\Items(type="object",
+ *                           @OA\Property(property="id", type="integer", example=9),
+ *                           @OA\Property(property="name", type="string", example="member"),
+ *                           @OA\Property(property="guard_name", type="string", example="web"),
+ *                           @OA\Property(property="created_at", type="string", format="date-time", example="2024-02-25T17:54:39.000000Z"),
+ *                           @OA\Property(property="updated_at", type="string", format="date-time", example="2024-02-25T17:54:39.000000Z"),
+ *                           @OA\Property(
+ *                               property="pivot", type="object",
+ *                               @OA\Property(property="model_type", type="string", example="App\\Models\\User"),
+ *                               @OA\Property(property="model_id", type="integer", example=12),
+ *                               @OA\Property(property="role_id", type="integer", example=9)
+ *                           )
+ *                       )
+ *                   ),
+ *                   @OA\Property(property="is_active_subscription", type="boolean", example=true),
+ *                   @OA\Property(property="is_canceled_subscription", type="boolean", example=false)
+ *               )
+ *           )
+ *       )
+ *  )
  */
 class UserController
 {
