@@ -6,6 +6,7 @@ use App\DataTransferObjects\UserData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Resources\UserResource;
 use App\Repositories\UserRepository;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
@@ -59,7 +60,7 @@ class AuthorizationController extends Controller
 
         return response()->json([
             'message' => __("Login successful!"),
-            'user' => $user,
+            'user' => new UserResource($user),
             'token' => $token,
         ]);
     }
