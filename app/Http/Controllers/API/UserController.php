@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Repositories\SubscriptionRepository;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\Request;
@@ -16,13 +17,11 @@ class UserController extends Controller
     {
     }
 
-    public function index()
+    public function getProfileData()
     {
-        $subscription = $this->subscriptionRepository->getActiveSubscription(Auth::id());
-
         return $this->respondWithSuccess([
             'message' => 'Data successfully retrieved!',
-            'data' => $subscription
+            'data' => new UserResource(Auth::user())
         ]);
     }
 }

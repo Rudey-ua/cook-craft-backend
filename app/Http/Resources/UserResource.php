@@ -14,13 +14,17 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $subscription = $this->subscription;
+
         return [
             'id' => $this->id,
             'firstname' => $this->firstname,
             'lastname' => $this->lastname,
             'profile_image' => $this->profile_image,
-            'userDetails' => new UserDetailsResource($this->userDetails),
             'is_active' => $this->is_active == 1,
+            'userDetails' => new UserDetailsResource($this->userDetails),
+            'is_active_subscription' => $subscription && (bool)$subscription->is_active,
+            'is_canceled_subscription' => $subscription && (bool)$subscription->is_canceled
         ];
     }
 }

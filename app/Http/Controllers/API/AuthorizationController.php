@@ -59,8 +59,6 @@ class AuthorizationController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'message' => __("Login successful!"),
-            'user' => new UserResource($user),
             'token' => $token,
         ]);
     }

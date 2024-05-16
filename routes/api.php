@@ -26,7 +26,7 @@ Route::controller(AuthorizationController::class)->group(function () {
 
 Route::group(['middleware' => ['auth:sanctum']],  function() {
 
-    Route::get('/users/profile', [UserController::class, 'index']);
+    Route::get('/users/profile', [UserController::class, 'getProfileData']);
 
     Route::controller(SubscriptionController::class)->group(function () {
         Route::post('/subscription', 'createSubscription');
