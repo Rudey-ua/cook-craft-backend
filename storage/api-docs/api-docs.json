@@ -71,31 +71,6 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Registration successful!"
-                                        },
-                                        "user": {
-                                            "properties": {
-                                                "id": {
-                                                    "type": "integer",
-                                                    "example": 7
-                                                },
-                                                "firstname": {
-                                                    "type": "string",
-                                                    "example": "Max"
-                                                },
-                                                "lastname": {
-                                                    "type": "string",
-                                                    "example": "Kostenko"
-                                                },
-                                                "email": {
-                                                    "type": "string",
-                                                    "example": "koctenko525@gmail.com"
-                                                }
-                                            },
-                                            "type": "object"
-                                        },
                                         "token": {
                                             "type": "string",
                                             "example": "26|B875OphHDAED388Vf42GlIitWT4LdS6dELslEchzf1cdb52e"
@@ -176,46 +151,6 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Login successful!"
-                                        },
-                                        "user": {
-                                            "properties": {
-                                                "id": {
-                                                    "type": "integer",
-                                                    "example": 7
-                                                },
-                                                "firstname": {
-                                                    "type": "string",
-                                                    "example": "Max"
-                                                },
-                                                "lastname": {
-                                                    "type": "string",
-                                                    "example": "Kostenko"
-                                                },
-                                                "email": {
-                                                    "type": "string",
-                                                    "format": "email",
-                                                    "example": "koctenko525@gmail.com"
-                                                },
-                                                "profile_image": {
-                                                    "type": "string",
-                                                    "example": null,
-                                                    "nullable": true
-                                                },
-                                                "email_verified_at": {
-                                                    "type": "string",
-                                                    "example": null,
-                                                    "nullable": true
-                                                },
-                                                "is_active": {
-                                                    "type": "integer",
-                                                    "example": 1
-                                                }
-                                            },
-                                            "type": "object"
-                                        },
                                         "token": {
                                             "type": "string",
                                             "example": "27|4vF4kuAbTOcYyyJo9LkuzGNojF7MsVCtAsWAyAUsc818010f"

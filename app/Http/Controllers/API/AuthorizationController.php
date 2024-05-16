@@ -41,8 +41,6 @@ class AuthorizationController extends Controller
             $token = $user->createToken('auth_token')->plainTextToken;
 
             return $this->respondWithSuccess([
-                'message' => __("Registration successful!"),
-                'user' => $user,
                 'token' => $token,
             ]);
         });

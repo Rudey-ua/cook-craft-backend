@@ -26,14 +26,6 @@ namespace App\Http\Controllers\Swagger;
  *          response=200,
  *          description="Registration successful",
  *          @OA\JsonContent(
- *              type="object",
- *              @OA\Property(property="message", type="string", example="Registration successful!"),
- *              @OA\Property(property="user", type="object",
- *                  @OA\Property(property="id", type="integer", example=7),
- *                  @OA\Property(property="firstname", type="string", example="Max"),
- *                  @OA\Property(property="lastname", type="string", example="Kostenko"),
- *                  @OA\Property(property="email", type="string", example="koctenko525@gmail.com")
- *              ),
  *              @OA\Property(property="token", type="string", example="26|B875OphHDAED388Vf42GlIitWT4LdS6dELslEchzf1cdb52e")
  *          )
  *      ),
@@ -70,18 +62,6 @@ namespace App\Http\Controllers\Swagger;
  *      response=200,
  *      description="Login successful",
  *      @OA\JsonContent(
- *        type="object",
- *        @OA\Property(property="message", type="string", example="Login successful!"),
- *        @OA\Property(
- *          property="user", type="object",
- *          @OA\Property(property="id", type="integer", example=7),
- *          @OA\Property(property="firstname", type="string", example="Max"),
- *          @OA\Property(property="lastname", type="string", example="Kostenko"),
- *          @OA\Property(property="email", type="string", format="email", example="koctenko525@gmail.com"),
- *          @OA\Property(property="profile_image", type="string", nullable=true, example=null),
- *          @OA\Property(property="email_verified_at", type="string", nullable=true, example=null),
- *          @OA\Property(property="is_active", type="integer", example=1)
- *        ),
  *        @OA\Property(property="token", type="string", example="27|4vF4kuAbTOcYyyJo9LkuzGNojF7MsVCtAsWAyAUsc818010f")
  *      )
  *    ),
