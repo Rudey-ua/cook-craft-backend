@@ -27,12 +27,13 @@ Route::controller(AuthorizationController::class)->group(function () {
 Route::group(['middleware' => ['auth:sanctum']],  function() {
 
     Route::controller(UserController::class)->group(function () {
-        Route::get('/users/profile', [UserController::class, 'getProfileData']);
+        Route::get('/users/profile', 'getProfileData');
     });
 
     Route::controller(SubscriptionController::class)->group(function () {
         Route::post('/subscription', 'createSubscription');
         Route::post('/subscription/cancel', 'cancelSubscription');
+        Route::get('/users/subscription/details', 'getUserSubscriptionInfo');
     });
 });
 

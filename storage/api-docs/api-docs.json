@@ -167,6 +167,144 @@
                 ]
             }
         },
+        "/api/users/subscription/details": {
+            "get": {
+                "tags": [
+                    "Subscription"
+                ],
+                "summary": "Get subscription details",
+                "operationId": "f79a224beeb1e58623a6bd8ce3a4e69e",
+                "responses": {
+                    "200": {
+                        "description": "Subscription data successfully retrieved!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Subscription data successfully retrieved!"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 8
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "MONTHLY"
+                                                },
+                                                "is_active": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "is_canceled": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "start_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2024-05-16"
+                                                },
+                                                "expired_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2024-06-16"
+                                                },
+                                                "plan": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Basic - One month"
+                                                        },
+                                                        "price": {
+                                                            "properties": {
+                                                                "EUR": {
+                                                                    "type": "number",
+                                                                    "format": "float",
+                                                                    "example": 10
+                                                                },
+                                                                "UAH": {
+                                                                    "type": "number",
+                                                                    "format": "float",
+                                                                    "example": 400
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        },
+                                                        "type": {
+                                                            "type": "string",
+                                                            "example": "BASIC"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2024-02-25T17:54:39.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2024-02-25T17:54:39.000000Z"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "provider_name": {
+                                                    "type": "string",
+                                                    "example": "PayPal"
+                                                },
+                                                "renewal_count": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "provider_subscription_id": {
+                                                    "type": "string",
+                                                    "example": "I-H3TK2EJMH5SN"
+                                                },
+                                                "cancel_reason": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error - No active subscription",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "You don't have an active subscription!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/auth/register": {
             "post": {
                 "tags": [
