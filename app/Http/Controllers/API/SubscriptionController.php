@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CancelSubscriptionRequest;
 use App\Http\Requests\CreateSubscriptionRequest;
+use App\Http\Resources\SubscriptionResource;
 use App\Repositories\SubscriptionRepository;
 use App\Services\Payment\PaymentProviderFactory;
 use F9Web\ApiResponseHelpers;
@@ -63,6 +64,17 @@ class SubscriptionController extends Controller
         ]);
     }
 
+    public function getUserSubscriptionInfo()
+    {
+        if (is_null(Auth::user()->subscription)) {
+            return $this->respondError(__("You don't have an active subscription!"));
+        }
+
+        return $this->respondWithSuccess([
+            'message' => 'Subscription data successfully retrieved!',
+            'data' => new SubscriptionResource(Auth::user()->subscription)
+        ]);
+    }
 
     private function extractRequestData($request)
     {
