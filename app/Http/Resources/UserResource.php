@@ -23,6 +23,7 @@ class UserResource extends JsonResource
             'profile_image' => $this->profile_image,
             'is_active' => $this->is_active == 1,
             'userDetails' => new UserDetailsResource($this->userDetails),
+            'role' =>  $this->roles()->get()->toArray(),
             'is_active_subscription' => $subscription && (bool)$subscription->is_active,
             'is_canceled_subscription' => $subscription && (bool)$subscription->is_canceled
         ];
