@@ -127,7 +127,7 @@ class PayPalService implements PaymentProviderInterface
                     ], JSON_THROW_ON_ERROR
                 ),
                 'application_context' => [
-                    'brand_name' => 'Zemfyra',
+                    'brand_name' => 'CookCraft',
                     'locale' => 'en-US',
                     'shipping_preference' => 'NO_SHIPPING',
                     'user_action' => 'SUBSCRIBE_NOW',

@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserDetails::class);
     }
+
+    public function subscription(): HasOne
+    {
+        return $this->hasOne(Subscription::class, 'user_id', 'id')->latest();
+    }
 }

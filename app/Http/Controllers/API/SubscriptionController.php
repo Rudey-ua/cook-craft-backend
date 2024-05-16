@@ -46,7 +46,10 @@ class SubscriptionController extends Controller
         $data = $this->extractRequestData($request);
 
         if (is_null($subscription = $this->subscriptionRepository->getActiveSubscription(Auth::id()))) {
-            return $this->respondNotFound("You don't have an active subscription!");
+            return $this->respondNotFound(__("You don't have an active subscription!"));
+        }
+        if ($this->subscriptionRepository->checkIfSubscriptionCanceled($subscription)) {
+            return $this->respondError(__("Your subscription already has been canceled!"));
         }
         try {
             $paymentProvider = PaymentProviderFactory::create($data['paymentMethod']);
