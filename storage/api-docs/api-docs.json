@@ -1,11 +1,172 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Zemfyra API",
+        "title": "CookCraft API",
         "version": "1.0.0"
     },
     "paths": {
         "/api/": {},
+        "/api/subscription": {
+            "post": {
+                "tags": [
+                    "Subscription"
+                ],
+                "summary": "Create a subscription",
+                "operationId": "91810adb9f86dda3d9546da5465cf11d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "planId",
+                                    "paymentMethod"
+                                ],
+                                "properties": {
+                                    "planId": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "paymentMethod": {
+                                        "type": "string",
+                                        "example": "PayPal"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Subscription created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Subscription created successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "provider_name": {
+                                                    "type": "string",
+                                                    "example": "PayPal"
+                                                },
+                                                "provider_subscription_id": {
+                                                    "type": "string",
+                                                    "example": "I-A58GRKHDW6Y4"
+                                                },
+                                                "approval_url": {
+                                                    "type": "string",
+                                                    "example": "https://www.sandbox.paypal.com/webapps/billing/subscriptions?ba_token=BA-7PH45808R52040445"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to create subscription - Already active subscription",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "You already have an active subscription!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/subscription/cancel": {
+            "post": {
+                "tags": [
+                    "Subscription"
+                ],
+                "summary": "Cancel a subscription",
+                "operationId": "1978bf53986c3ecdad8d43bbbd53fc3f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "paymentMethod",
+                                    "reason"
+                                ],
+                                "properties": {
+                                    "paymentMethod": {
+                                        "type": "string",
+                                        "example": "PayPal"
+                                    },
+                                    "reason": {
+                                        "type": "string",
+                                        "example": "I want cancel membership!"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Subscription successfully canceled!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Subscription successfully canceled!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Cancellation failed - Subscription already canceled",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Your subscription already has been canceled!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/auth/register": {
             "post": {
                 "tags": [
@@ -71,31 +232,6 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Registration successful!"
-                                        },
-                                        "user": {
-                                            "properties": {
-                                                "id": {
-                                                    "type": "integer",
-                                                    "example": 7
-                                                },
-                                                "firstname": {
-                                                    "type": "string",
-                                                    "example": "Max"
-                                                },
-                                                "lastname": {
-                                                    "type": "string",
-                                                    "example": "Kostenko"
-                                                },
-                                                "email": {
-                                                    "type": "string",
-                                                    "example": "koctenko525@gmail.com"
-                                                }
-                                            },
-                                            "type": "object"
-                                        },
                                         "token": {
                                             "type": "string",
                                             "example": "26|B875OphHDAED388Vf42GlIitWT4LdS6dELslEchzf1cdb52e"
@@ -176,46 +312,6 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Login successful!"
-                                        },
-                                        "user": {
-                                            "properties": {
-                                                "id": {
-                                                    "type": "integer",
-                                                    "example": 7
-                                                },
-                                                "firstname": {
-                                                    "type": "string",
-                                                    "example": "Max"
-                                                },
-                                                "lastname": {
-                                                    "type": "string",
-                                                    "example": "Kostenko"
-                                                },
-                                                "email": {
-                                                    "type": "string",
-                                                    "format": "email",
-                                                    "example": "koctenko525@gmail.com"
-                                                },
-                                                "profile_image": {
-                                                    "type": "string",
-                                                    "example": null,
-                                                    "nullable": true
-                                                },
-                                                "email_verified_at": {
-                                                    "type": "string",
-                                                    "example": null,
-                                                    "nullable": true
-                                                },
-                                                "is_active": {
-                                                    "type": "integer",
-                                                    "example": 1
-                                                }
-                                            },
-                                            "type": "object"
-                                        },
                                         "token": {
                                             "type": "string",
                                             "example": "27|4vF4kuAbTOcYyyJo9LkuzGNojF7MsVCtAsWAyAUsc818010f"
@@ -279,6 +375,143 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/users/profile": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Retrieve user profile",
+                "operationId": "09c7b3718d0e7d50b9fa4f9b293813ef",
+                "responses": {
+                    "200": {
+                        "description": "Data successfully retrieved!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data successfully retrieved!"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 12
+                                                },
+                                                "firstname": {
+                                                    "type": "string",
+                                                    "example": "Max"
+                                                },
+                                                "lastname": {
+                                                    "type": "string",
+                                                    "example": "Kostenko"
+                                                },
+                                                "profile_image": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "is_active": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "userDetails": {
+                                                    "properties": {
+                                                        "birth_date": {
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "2002-10-11"
+                                                        },
+                                                        "gender": {
+                                                            "type": "string",
+                                                            "example": "male"
+                                                        },
+                                                        "language": {
+                                                            "type": "string",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        },
+                                                        "time_zone": {
+                                                            "type": "string",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "role": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 9
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "member"
+                                                            },
+                                                            "guard_name": {
+                                                                "type": "string",
+                                                                "example": "web"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2024-02-25T17:54:39.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2024-02-25T17:54:39.000000Z"
+                                                            },
+                                                            "pivot": {
+                                                                "properties": {
+                                                                    "model_type": {
+                                                                        "type": "string",
+                                                                        "example": "App\\\\Models\\\\User"
+                                                                    },
+                                                                    "model_id": {
+                                                                        "type": "integer",
+                                                                        "example": 12
+                                                                    },
+                                                                    "role_id": {
+                                                                        "type": "integer",
+                                                                        "example": 9
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "is_active_subscription": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "is_canceled_subscription": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"

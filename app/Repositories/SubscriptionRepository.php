@@ -37,6 +37,11 @@ class SubscriptionRepository
             ->first();
     }
 
+    public function checkIfSubscriptionCanceled(Subscription $subscription): bool
+    {
+        return $subscription->is_canceled;
+    }
+
     public function getUserActiveSubscriptionByProvider(string $provider, int $userId): ?Subscription
     {
         $provider = strtolower($provider);
