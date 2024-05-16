@@ -293,6 +293,143 @@
                     }
                 ]
             }
+        },
+        "/api/users/profile": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Retrieve user profile",
+                "operationId": "09c7b3718d0e7d50b9fa4f9b293813ef",
+                "responses": {
+                    "200": {
+                        "description": "Data successfully retrieved!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data successfully retrieved!"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 12
+                                                },
+                                                "firstname": {
+                                                    "type": "string",
+                                                    "example": "Max"
+                                                },
+                                                "lastname": {
+                                                    "type": "string",
+                                                    "example": "Kostenko"
+                                                },
+                                                "profile_image": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "is_active": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "userDetails": {
+                                                    "properties": {
+                                                        "birth_date": {
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "2002-10-11"
+                                                        },
+                                                        "gender": {
+                                                            "type": "string",
+                                                            "example": "male"
+                                                        },
+                                                        "language": {
+                                                            "type": "string",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        },
+                                                        "time_zone": {
+                                                            "type": "string",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "role": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 9
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "member"
+                                                            },
+                                                            "guard_name": {
+                                                                "type": "string",
+                                                                "example": "web"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2024-02-25T17:54:39.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2024-02-25T17:54:39.000000Z"
+                                                            },
+                                                            "pivot": {
+                                                                "properties": {
+                                                                    "model_type": {
+                                                                        "type": "string",
+                                                                        "example": "App\\\\Models\\\\User"
+                                                                    },
+                                                                    "model_id": {
+                                                                        "type": "integer",
+                                                                        "example": 12
+                                                                    },
+                                                                    "role_id": {
+                                                                        "type": "integer",
+                                                                        "example": 9
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "is_active_subscription": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "is_canceled_subscription": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
