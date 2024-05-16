@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Swagger;
 
 /**
  * @OA\Info(
- *     title="Zemfyra API",
+ *     title="CookCraft API",
  *     version="1.0.0"
  * ),
  * @OA\PathItem(
