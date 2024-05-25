@@ -29,6 +29,29 @@ class UserRepository
         return $user;
     }
 
+    public function update($userData, User $user)
+    {
+        try {
+            $user->update([
+                'firstname' => $userData['firstName'] ?? $user->firstname,
+                'lastname' => $userData['lastName'] ?? $user->lastname,
+                'email' => $userData['email'] ?? $user->email,
+            ]);
+
+            $user->userDetails->update([
+                'birth_date' => $userData['birthDate'] ?? $user->userDetails->birth_date,
+                'language' => $userData['language'] ?? $user->userDetails->language,
+                'time_zone' => $userData['time_zone'] ?? $user->userDetails->time_zone,
+                'gender' => $userData['gender'] ?? $user->userDetails->gender,
+            ]);
+
+            return $user;
+        } catch (Throwable $e) {
+            Log::error('Error while updating user record: ' . $e->getMessage());
+            throw new Exception($e->getMessage());
+        }
+    }
+
     public function createUser(UserData $userData): ?User
     {
         return $this->userModel->create([

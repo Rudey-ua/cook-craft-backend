@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Recipe;
+namespace App\Services;
 
 class RecipeService
 {
