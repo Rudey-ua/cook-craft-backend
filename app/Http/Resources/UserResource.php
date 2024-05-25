@@ -2,11 +2,13 @@
 
 namespace App\Http\Resources;
 
+use App\Traits\FIleTrait;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
 {
+    use FIleTrait;
     /**
      * Transform the resource into an array.
      *
@@ -21,7 +23,7 @@ class UserResource extends JsonResource
             'firstname' => $this->firstname,
             'lastname' => $this->lastname,
             'email' => $this->email,
-            'profile_image' => $this->profile_image,
+            'profile_image' => $this->getProfileImageUrl($this->profile_image),
             'is_active' => $this->is_active == 1,
             'userDetails' => new UserDetailsResource($this->userDetails),
             'role' =>  $this->roles()->get()->toArray(),
