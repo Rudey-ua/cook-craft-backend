@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\UserDetails;
 use App\Traits\FIleTrait;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -25,15 +26,13 @@ class RecipeRepository
 
     public function createRecipeWithDetails(RecipeData $recipeData): Recipe
     {
-        try {
+        return DB::transaction(function () use ($recipeData) {
             $recipe = $this->createRecipe($recipeData);
             $this->createIngredients($recipe->id, $recipeData->ingredients);
             $this->createSteps($recipe->id, $recipeData->steps);
-        } catch (Throwable $e) {
-            Log::error('Error while creating recipe record: ' . $e->getMessage());
-            throw new Exception('Failed to create recipe: ' . $e->getMessage());
-        }
-        return $recipe;
+
+            return $recipe;
+        });
     }
 
     protected function createRecipe(RecipeData $recipeData): Recipe
