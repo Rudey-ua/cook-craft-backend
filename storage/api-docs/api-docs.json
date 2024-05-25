@@ -664,6 +664,216 @@
                     }
                 ]
             }
+        },
+        "/api/users/update": {
+            "post": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Update user profile",
+                "operationId": "f515602837678c58b8b57341c70465ea",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "firstName": {
+                                        "description": "nullable|string|min:3",
+                                        "type": "string"
+                                    },
+                                    "lastName": {
+                                        "description": "nullable|string|min:3",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "nullable|email|unique:users",
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "description": "nullable|Password with at least 8 characters including letters and numbers",
+                                        "type": "string"
+                                    },
+                                    "birthDate": {
+                                        "description": "nullable|date|before_or_equal:today",
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "profileImage": {
+                                        "description": "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "gender": {
+                                        "description": "nullable|in:male,female",
+                                        "type": "string",
+                                        "enum": [
+                                            "male",
+                                            "female"
+                                        ]
+                                    },
+                                    "language": {
+                                        "description": "nullable",
+                                        "type": "string"
+                                    },
+                                    "timezone": {
+                                        "description": "nullable",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User profile updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User profile updated successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 3
+                                                },
+                                                "firstname": {
+                                                    "type": "string",
+                                                    "example": "Den"
+                                                },
+                                                "lastname": {
+                                                    "type": "string",
+                                                    "example": "Kostenko"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "format": "email",
+                                                    "example": "koctenko525@gmail.com"
+                                                },
+                                                "profile_image": {
+                                                    "type": "string",
+                                                    "example": "https://canteen-app.pp.ua/storage/profile_images/6651dcf7ab7d02.74289847_23dd31f39f75c3852fd6c1f6a9d915c3662a3f7689970.jpeg"
+                                                },
+                                                "is_active": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "userDetails": {
+                                                    "properties": {
+                                                        "birth_date": {
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "2002-11-10"
+                                                        },
+                                                        "gender": {
+                                                            "type": "string",
+                                                            "example": "male"
+                                                        },
+                                                        "language": {
+                                                            "type": "string",
+                                                            "example": "ru"
+                                                        },
+                                                        "time_zone": {
+                                                            "type": "string",
+                                                            "example": "Europe/Kyiv"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "role": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 3
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "member"
+                                                            },
+                                                            "guard_name": {
+                                                                "type": "string",
+                                                                "example": "web"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2024-03-03T20:08:04.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2024-03-03T20:08:04.000000Z"
+                                                            },
+                                                            "pivot": {
+                                                                "properties": {
+                                                                    "model_type": {
+                                                                        "type": "string",
+                                                                        "example": "App\\\\Models\\\\User"
+                                                                    },
+                                                                    "model_id": {
+                                                                        "type": "integer",
+                                                                        "example": 3
+                                                                    },
+                                                                    "role_id": {
+                                                                        "type": "integer",
+                                                                        "example": 3
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "is_active_subscription": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "is_canceled_subscription": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - Incorrect Data Provided",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Invalid data provided"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
