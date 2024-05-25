@@ -679,34 +679,27 @@
                             "schema": {
                                 "properties": {
                                     "firstName": {
-                                        "description": "nullable|string|min:3",
                                         "type": "string"
                                     },
                                     "lastName": {
-                                        "description": "nullable|string|min:3",
                                         "type": "string"
                                     },
                                     "email": {
-                                        "description": "nullable|email|unique:users",
                                         "type": "string",
                                         "format": "email"
                                     },
                                     "password": {
-                                        "description": "nullable|Password with at least 8 characters including letters and numbers",
                                         "type": "string"
                                     },
                                     "birthDate": {
-                                        "description": "nullable|date|before_or_equal:today",
                                         "type": "string",
                                         "format": "date"
                                     },
                                     "profileImage": {
-                                        "description": "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
                                         "type": "string",
                                         "format": "binary"
                                     },
                                     "gender": {
-                                        "description": "nullable|in:male,female",
                                         "type": "string",
                                         "enum": [
                                             "male",
@@ -714,11 +707,9 @@
                                         ]
                                     },
                                     "language": {
-                                        "description": "nullable",
                                         "type": "string"
                                     },
                                     "timezone": {
-                                        "description": "nullable",
                                         "type": "string"
                                     }
                                 },

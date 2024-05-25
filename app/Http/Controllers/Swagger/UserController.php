@@ -159,15 +159,15 @@ namespace App\Http\Controllers\Swagger;
  *               mediaType="multipart/form-data",
  *               @OA\Schema(
  *                   type="object",
- *                   @OA\Property(property="firstName", type="string", description="nullable|string|min:3"),
- *                   @OA\Property(property="lastName", type="string", description="nullable|string|min:3"),
- *                   @OA\Property(property="email", type="string", format="email", description="nullable|email|unique:users"),
- *                   @OA\Property(property="password", type="string", description="nullable|Password with at least 8 characters including letters and numbers"),
- *                   @OA\Property(property="birthDate", type="string", format="date", description="nullable|date|before_or_equal:today"),
- *                   @OA\Property(property="profileImage", type="string", format="binary", description="nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048"),
- *                   @OA\Property(property="gender", type="string", enum={"male", "female"}, description="nullable|in:male,female"),
- *                   @OA\Property(property="language", type="string", description="nullable"),
- *                   @OA\Property(property="timezone", type="string", description="nullable")
+ *                   @OA\Property(property="firstName", type="string"),
+ *                   @OA\Property(property="lastName", type="string"),
+ *                   @OA\Property(property="email", type="string", format="email"),
+ *                   @OA\Property(property="password", type="string"),
+ *                   @OA\Property(property="birthDate", type="string", format="date"),
+ *                   @OA\Property(property="profileImage", type="string", format="binary"),
+ *                   @OA\Property(property="gender", type="string", enum={"male", "female"}),
+ *                   @OA\Property(property="language", type="string"),
+ *                   @OA\Property(property="timezone", type="string")
  *               )
  *           )
  *       ),
