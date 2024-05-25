@@ -34,7 +34,7 @@ trait FIleTrait
         if (!$filename) {
             return null;
         }
-        return Storage::disk('public')->url('recipe_cover_photo/' . $filename);
+        return Storage::disk('public')->url('recipe_cover_photos/' . $filename);
     }
 
     public function getStepsRecipePhotos(array $filenames): array
