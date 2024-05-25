@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('difficulty_level', ['easy', 'medium', 'hard']);
             $table->integer('portions');
             $table->boolean('is_approved');
+            $table->boolean('is_published');
             $table->string('cover_photo');
             $table->timestamps();
         });
