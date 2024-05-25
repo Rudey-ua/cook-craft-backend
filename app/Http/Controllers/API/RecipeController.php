@@ -40,4 +40,10 @@ class RecipeController extends Controller
         }
         return new RecipeResource($recipe);
     }
+
+    public function destroy(int $id)
+    {
+        Recipe::findOrFail($id)->delete();
+        return $this->respondNoContent();
+    }
 }
