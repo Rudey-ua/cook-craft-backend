@@ -4,6 +4,7 @@ use App\Http\Controllers\API\AuthorizationController;
 use App\Http\Controllers\API\PaymentCallbackController;
 use App\Http\Controllers\API\PaymentWebhookController;
 use App\Http\Controllers\API\PlanController;
+use App\Http\Controllers\API\RecipeController;
 use App\Http\Controllers\API\SubscriptionController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Support\Facades\Route;
@@ -27,11 +28,15 @@ Route::controller(AuthorizationController::class)->group(function () {
 
 Route::group(['middleware' => ['auth:sanctum']],  function() {
 
+    Route::controller(RecipeController::class)->group(function () {
+        Route::post('/recipe', 'store');
+        Route::get('/recipe/{id}', 'show');
+    });
+
     Route::prefix('users')->controller(UserController::class)->group(function () {
         Route::get('/profile', 'getProfileData');
         Route::post('/update', 'updateProfile');
     });
-
 
     Route::controller(SubscriptionController::class)->group(function () {
         Route::post('/subscription', 'createSubscription');
