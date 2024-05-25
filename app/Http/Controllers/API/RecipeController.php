@@ -19,7 +19,7 @@ class RecipeController extends Controller
 
     public function index()
     {
-
+        return RecipeResource::collection(Recipe::all());
     }
 
     public function show(int $id)

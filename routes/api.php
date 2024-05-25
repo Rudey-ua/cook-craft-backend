@@ -29,6 +29,7 @@ Route::controller(AuthorizationController::class)->group(function () {
 Route::group(['middleware' => ['auth:sanctum']],  function() {
 
     Route::controller(RecipeController::class)->group(function () {
+        Route::get('/recipe', 'index');
         Route::get('/recipe/{id}', 'show');
         Route::post('/recipe', 'store');
     });
