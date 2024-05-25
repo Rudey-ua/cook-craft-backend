@@ -780,9 +780,6 @@
                                         "type": "string",
                                         "format": "email"
                                     },
-                                    "password": {
-                                        "type": "string"
-                                    },
                                     "birthDate": {
                                         "type": "string",
                                         "format": "date"

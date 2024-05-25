@@ -162,7 +162,6 @@ namespace App\Http\Controllers\Swagger;
  *                   @OA\Property(property="firstName", type="string"),
  *                   @OA\Property(property="lastName", type="string"),
  *                   @OA\Property(property="email", type="string", format="email"),
- *                   @OA\Property(property="password", type="string"),
  *                   @OA\Property(property="birthDate", type="string", format="date"),
  *                   @OA\Property(property="profileImage", type="string", format="binary"),
  *                   @OA\Property(property="gender", type="string", enum={"male", "female"}),
