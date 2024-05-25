@@ -36,4 +36,11 @@ trait FIleTrait
         }
         return Storage::disk('public')->url('recipe_cover_photo/' . $filename);
     }
+
+    public function getStepsRecipePhotos(array $filenames): array
+    {
+        return array_map(function ($filename) {
+            return Storage::disk('public')->url('recipe_step_photos/' . $filename);
+        }, $filenames);
+    }
 }

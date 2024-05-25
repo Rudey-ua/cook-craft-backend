@@ -34,7 +34,7 @@ class RecipeRepository
         $recipeDataArray = $recipeData->toArray();
 
         if (!empty($recipeData->coverPhoto)) {
-            $filename = $this->uploadFile($recipeData->coverPhoto, 'recipe_cover_photo');
+            $filename = $this->uploadFile($recipeData->coverPhoto, 'recipe_cover_photos');
             $recipeDataArray['cover_photo'] = $filename;
         }
 
@@ -51,11 +51,14 @@ class RecipeRepository
     protected function createSteps(int $recipeId, array $steps): void
     {
         foreach ($steps as $stepData) {
-            $this->stepModel->create([
-                'recipe_id' => $recipeId,
-                'description' => $stepData->description,
-                'photos' => json_encode($stepData->photos),
-            ]);
+            $stepDataArray = $stepData->toArray();
+
+            if (!empty($stepData->photos)) {
+                $stepDataArray['photos'] = json_encode(array_map(function ($photo) {
+                    return $this->uploadFile($photo, 'recipe_step_photos');
+                }, $stepData->photos));
+            }
+            $this->stepModel->create(array_merge($stepDataArray, ['recipe_id' => $recipeId]));
         }
     }
 }
