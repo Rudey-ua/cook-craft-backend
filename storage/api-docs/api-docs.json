@@ -111,6 +111,11 @@
                         "multipart/form-data": {
                             "schema": {
                                 "properties": {
+                                    "userId": {
+                                        "description": "User ID",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
                                     "title": {
                                         "description": "Recipe title",
                                         "type": "string",
@@ -218,6 +223,10 @@
                                         "id": {
                                             "type": "integer",
                                             "example": 22
+                                        },
+                                        "user_id": {
+                                            "type": "integer",
+                                            "example": 1
                                         },
                                         "title": {
                                             "type": "string",

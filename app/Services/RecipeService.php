@@ -18,6 +18,7 @@ class RecipeService
     public function createRecipe($validatedData): Recipe
     {
         $recipeData = new RecipeData(
+            userId: auth()->user()->id,
             title: $validatedData['title'],
             description: $validatedData['description'],
             cooking_time: $validatedData['cooking_time'],

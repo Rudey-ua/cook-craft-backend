@@ -13,6 +13,7 @@ namespace App\Http\Controllers\Swagger;
  *               mediaType="multipart/form-data",
  *               @OA\Schema(
  *                   type="object",
+ *                   @OA\Property(property="userId", type="integer", description="User ID", example=1),
  *                   @OA\Property(property="title", type="string", description="Recipe title", example="Chocolate Cake"),
  *                   @OA\Property(property="description", type="string", description="Recipe description", example="A delicious and easy-to-make chocolate cake."),
  *                   @OA\Property(property="cooking_time", type="integer", description="Cooking time in minutes", example=120),
@@ -55,6 +56,7 @@ namespace App\Http\Controllers\Swagger;
  *           @OA\JsonContent(
  *               type="object",
  *               @OA\Property(property="id", type="integer", example=22),
+ *               @OA\Property(property="user_id", type="integer", example=1),
  *               @OA\Property(property="title", type="string", example="Chocolate Cake"),
  *               @OA\Property(property="description", type="string", example="A delicious and easy-to-make chocolate cake."),
  *               @OA\Property(property="cooking_time", type="integer", example=120),

@@ -7,6 +7,7 @@ use Illuminate\Http\UploadedFile;
 class RecipeData
 {
     public function __construct(
+        public readonly int $userId,
         public readonly string $title,
         public readonly string $description,
         public readonly int $cooking_time,
@@ -23,6 +24,7 @@ class RecipeData
     public function toArray(): array
     {
         return [
+            'user_id' => $this->userId,
             'title' => $this->title,
             'description' => $this->description,
             'cooking_time' => $this->cooking_time,
