@@ -20,4 +20,12 @@ trait FIleTrait
             Storage::disk('public')->delete('profile_images/' . $filename);
         }
     }
+
+    public function getProfileImageUrl($filename): ?string
+    {
+        if (!$filename) {
+            return null;
+        }
+        return Storage::disk('public')->url('profile_images/' . $filename);
+    }
 }
