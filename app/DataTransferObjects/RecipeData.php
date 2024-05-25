@@ -2,6 +2,8 @@
 
 namespace App\DataTransferObjects;
 
+use Illuminate\Http\UploadedFile;
+
 class RecipeData
 {
     public function __construct(
@@ -12,7 +14,7 @@ class RecipeData
         public readonly int $portions,
         public readonly bool $is_approved,
         public readonly bool $is_published,
-        public readonly string $cover_photo,
+        public readonly UploadedFile $coverPhoto,
         public readonly array $ingredients,
         public readonly array $steps
     ) {
@@ -28,7 +30,7 @@ class RecipeData
             'portions' => $this->portions,
             'is_approved' => $this->is_approved,
             'is_published' => $this->is_published,
-            'cover_photo' => $this->cover_photo,
+            'cover_photo' => $this->coverPhoto,
         ];
     }
 }

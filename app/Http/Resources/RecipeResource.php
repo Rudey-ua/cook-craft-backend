@@ -2,11 +2,13 @@
 
 namespace App\Http\Resources;
 
+use App\Traits\FIleTrait;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class RecipeResource extends JsonResource
 {
+    use FIleTrait;
     /**
      * Transform the resource into an array.
      *
@@ -23,7 +25,7 @@ class RecipeResource extends JsonResource
             'portions' => $this->portions,
             'is_approved' => $this->is_approved,
             'is_published' => $this->is_published,
-            'cover_photo' => $this->cover_photo,
+            'cover_photo' => $this->getRecipeCoverPhoto($this->cover_photo),
             'ingredients' => IngredientResource::collection($this->ingredients),
             'steps' => StepResource::collection($this->steps)
         ];

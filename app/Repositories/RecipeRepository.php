@@ -3,21 +3,15 @@
 namespace App\Repositories;
 
 use App\DataTransferObjects\RecipeData;
-use App\DataTransferObjects\UserData;
 use App\Models\Ingredient;
 use App\Models\Recipe;
 use App\Models\Step;
-use App\Models\User;
-use App\Models\UserDetails;
 use App\Traits\FIleTrait;
-use Exception;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Throwable;
 
 class RecipeRepository
 {
+    use FIleTrait;
     public function __construct(
         protected readonly Recipe $recipeModel,
         protected readonly Ingredient $ingredientModel,
@@ -37,7 +31,14 @@ class RecipeRepository
 
     protected function createRecipe(RecipeData $recipeData): Recipe
     {
-        return $this->recipeModel->create($recipeData->toArray());
+        $recipeDataArray = $recipeData->toArray();
+
+        if (!empty($recipeData->coverPhoto)) {
+            $filename = $this->uploadFile($recipeData->coverPhoto, 'recipe_cover_photo');
+            $recipeDataArray['cover_photo'] = $filename;
+        }
+
+        return $this->recipeModel->create($recipeDataArray);
     }
 
     protected function createIngredients(int $recipeId, array $ingredients): void

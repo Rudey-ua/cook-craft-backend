@@ -25,7 +25,7 @@ class RecipeService
             portions: $validatedData['portions'],
             is_approved: $validatedData['is_approved'],
             is_published: $validatedData['is_published'],
-            cover_photo: $validatedData['cover_photo'],
+            coverPhoto: $validatedData['cover_photo'],
             ingredients: array_map(function ($ingredient) {
                 return new IngredientData(
                     title: $ingredient['title'],
