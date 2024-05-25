@@ -27,9 +27,11 @@ Route::controller(AuthorizationController::class)->group(function () {
 
 Route::group(['middleware' => ['auth:sanctum']],  function() {
 
-    Route::controller(UserController::class)->group(function () {
-        Route::get('/users/profile', 'getProfileData');
+    Route::prefix('users')->controller(UserController::class)->group(function () {
+        Route::get('/profile', 'getProfileData');
+        Route::post('/update', 'updateProfile');
     });
+
 
     Route::controller(SubscriptionController::class)->group(function () {
         Route::post('/subscription', 'createSubscription');
