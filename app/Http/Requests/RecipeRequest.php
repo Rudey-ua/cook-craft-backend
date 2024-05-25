@@ -40,5 +40,4 @@ class RecipeRequest extends FormRequest
             'steps.*.photos.*' => 'file|mimes:jpg,jpeg,png|max:2048'
         ];
     }
-
 }
