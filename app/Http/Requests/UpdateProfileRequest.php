@@ -28,9 +28,10 @@ class UpdateProfileRequest extends FormRequest
             'email' => 'nullable|email|unique:users',
             'password' => ['nullable', Password::min(8)->letters()->numbers()],
             'birthDate' => 'nullable|date|before_or_equal:today',
+            'profileImage' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'gender' => 'nullable|in:male,female',
             'language' => 'nullable',
-            'time_zone' => 'nullable'
+            'timezone' => 'nullable'
         ];
     }
 }
