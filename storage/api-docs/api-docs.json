@@ -98,13 +98,13 @@
                 ]
             }
         },
-        "/api/recipe": {
+        "/api/recipes": {
             "get": {
                 "tags": [
                     "Recipes"
                 ],
                 "summary": "Retrieve all recipes",
-                "operationId": "e2037750966074906f22f6b94a77bf53",
+                "operationId": "99b2921505aaa0b05aafd140ed9f5f09",
                 "responses": {
                     "200": {
                         "description": "List of recipes retrieved successfully",
@@ -241,7 +241,7 @@
                     "Recipes"
                 ],
                 "summary": "Create a new recipe",
-                "operationId": "dd2196d82b0b0571a447be626bf77769",
+                "operationId": "663b6533d0b183c33766adc163cdf85a",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -490,13 +490,13 @@
                 ]
             }
         },
-        "/api/recipe/{id}/update": {
+        "/api/recipes/{id}/update": {
             "post": {
                 "tags": [
                     "Recipes"
                 ],
                 "summary": "Update an existing recipe",
-                "operationId": "57f527651376cdb4470eb5f7e8ee2690",
+                "operationId": "767b5248e7eec0c496df525789c9cbee",
                 "parameters": [
                     {
                         "name": "id",
@@ -756,13 +756,13 @@
                 ]
             }
         },
-        "/api/users/recipe": {
+        "/api/users/recipes": {
             "get": {
                 "tags": [
                     "Recipes"
                 ],
                 "summary": "Retrieve list of recipes for authenticated user",
-                "operationId": "f99b0e97fc036aaf5e9eb44d08388582",
+                "operationId": "aa268e21d0dc7a527a932dbe1fc24745",
                 "responses": {
                     "200": {
                         "description": "List of recipes retrieved successfully",
@@ -895,13 +895,13 @@
                 ]
             }
         },
-        "/api/recipe/{id}": {
+        "/api/recipes/{id}": {
             "get": {
                 "tags": [
                     "Recipes"
                 ],
                 "summary": "Retrieve a specific recipe",
-                "operationId": "c5c6a4330c142151e53c1e0eaf2b1d41",
+                "operationId": "62d824b640fffa2342257fdacf9532d2",
                 "parameters": [
                     {
                         "name": "id",
@@ -1046,7 +1046,7 @@
                     "Recipes"
                 ],
                 "summary": "Delete a recipe",
-                "operationId": "9282b79477672f649a8cd7bb96b62003",
+                "operationId": "7ad2e6b491de440e1a6e9957ab0862e6",
                 "parameters": [
                     {
                         "name": "id",
