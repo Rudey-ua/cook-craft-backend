@@ -6,8 +6,10 @@ use App\DataTransferObjects\FavouriteData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FavouriteRequest;
 use App\Http\Resources\FavouriteResource;
+use App\Models\Favorite;
 use App\Repositories\FavouriteRepository;
 use F9Web\ApiResponseHelpers;
+use Illuminate\Http\JsonResponse;
 
 class FavouriteController extends Controller
 {
@@ -44,8 +46,17 @@ class FavouriteController extends Controller
         return new FavouriteResource($commentData);
     }
 
-    public function destroy()
+    public function destroy(int $id) : JsonResponse
     {
+        $favourite = Favorite::where('recipe_id', $id)
+            ->where('user_id', auth()->user()->id)
+            ->first();
 
+        if (is_null($favourite)) {
+            return $this->respondNotFound(__("Specified recipe doesn't exist!"));
+        }
+        $favourite->delete();
+
+        return $this->respondNoContent();
     }
 }

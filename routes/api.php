@@ -42,7 +42,7 @@ Route::group(['middleware' => ['auth:sanctum']],  function() {
     Route::controller(FavouriteController::class)->group(function () {
         Route::get('/users/favourites', 'show');
         Route::post('/favourites', 'store');
-        Route::delete('/favourites/{id}', 'destroy');
+        Route::delete('/favorites/recipes/{id}', 'destroy');
     });
 
     Route::controller(CommentController::class)->group(function () {
