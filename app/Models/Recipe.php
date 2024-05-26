@@ -23,6 +23,11 @@ class Recipe extends Model
         return $this->hasMany(Step::class);
     }
 
+    public function comments() : HasMany
+    {
+        return $this->hasMany(Comment::class, 'recipe_id', 'id');
+    }
+
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class, 'recipe_tag');
