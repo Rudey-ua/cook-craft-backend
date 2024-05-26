@@ -7,6 +7,7 @@ use App\Http\Controllers\API\PaymentCallbackController;
 use App\Http\Controllers\API\PaymentWebhookController;
 use App\Http\Controllers\API\PlanController;
 use App\Http\Controllers\API\RecipeController;
+use App\Http\Controllers\API\SubscriberController;
 use App\Http\Controllers\API\SubscriptionController;
 use App\Http\Controllers\API\TagController;
 use App\Http\Controllers\API\UserController;
@@ -30,6 +31,11 @@ Route::controller(AuthorizationController::class)->group(function () {
 });
 
 Route::group(['middleware' => ['auth:sanctum']],  function() {
+
+    Route::controller(SubscriberController::class)->group(function () {
+        Route::post('/subscribe', 'subscribe');
+        Route::post('/unsubscribe', 'unsubscribe');
+    });
 
     Route::controller(RecipeController::class)->group(function () {
         Route::get('/recipes', 'index');

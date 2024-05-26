@@ -65,4 +65,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Favorite::class, 'user_id', 'id');
     }
+    public function subscribersCount(): int
+    {
+        return $this->hasMany(Subscriber::class, 'author_id')->count();
+    }
 }
