@@ -353,6 +353,145 @@
                 ]
             }
         },
+        "/api/users/recipe": {
+            "get": {
+                "tags": [
+                    "Recipes"
+                ],
+                "summary": "Retrieve list of recipes for specific user",
+                "operationId": "f99b0e97fc036aaf5e9eb44d08388582",
+                "responses": {
+                    "200": {
+                        "description": "List of recipes retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 25
+                                            },
+                                            "user_id": {
+                                                "type": "integer",
+                                                "example": 14
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "example": "Chimichurri Sauce"
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "example": "This famous Argentinian chimichurri sauce is perfect for any grilled chicken, meat, or fish. My catering customers love it on garlic crostini with grilled flank steak slices."
+                                            },
+                                            "cooking_time": {
+                                                "type": "integer",
+                                                "example": 120
+                                            },
+                                            "difficulty_level": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "easy",
+                                                    "medium",
+                                                    "hard"
+                                                ],
+                                                "example": "medium"
+                                            },
+                                            "portions": {
+                                                "type": "integer",
+                                                "example": 4
+                                            },
+                                            "is_approved": {
+                                                "type": "boolean",
+                                                "example": true
+                                            },
+                                            "is_published": {
+                                                "type": "boolean",
+                                                "example": true
+                                            },
+                                            "cover_photo": {
+                                                "type": "string",
+                                                "example": "localhost/storage/recipe_cover_photos/66524ee229a0d3.71372581_vegetarian-recipes-1.jpg"
+                                            },
+                                            "ingredients": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 51
+                                                        },
+                                                        "title": {
+                                                            "type": "string",
+                                                            "example": "fresh parsley"
+                                                        },
+                                                        "measure": {
+                                                            "type": "string",
+                                                            "example": "cup"
+                                                        },
+                                                        "count": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "steps": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 42
+                                                        },
+                                                        "description": {
+                                                            "type": "string",
+                                                            "example": "Combine parsley, oil, vinegar, oregano, cumin, garlic, hot sauce, and salt in a blender or food processor. Mix on medium speed until ingredients are evenly blended, about 10 seconds."
+                                                        },
+                                                        "photos": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "string",
+                                                                "example": "localhost/storage/recipe_step_photos/66524ee22f2225.89812296_k_Photo_Recipe_Ramp_Up_2022-02-Air-Fryer-Roasted-Potatoes_IMG_6850.jpeg"
+                                                            }
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Invalid request parameters"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/subscription": {
             "post": {
                 "tags": [
