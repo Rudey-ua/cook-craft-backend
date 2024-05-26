@@ -4,11 +4,13 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Resources\RecipeResource;
 use App\Http\Resources\UserResource;
 use App\Repositories\SubscriptionRepository;
 use App\Repositories\UserRepository;
 use App\Services\UserService;
 use F9Web\ApiResponseHelpers;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -37,5 +39,10 @@ class UserController extends Controller
             return $this->respondError($e->getMessage());
         }
         return new UserResource($userData);
+    }
+
+    public function getUserRecipes() : JsonResource
+    {
+        return RecipeResource::collection(Auth::user()->recipes);
     }
 }
