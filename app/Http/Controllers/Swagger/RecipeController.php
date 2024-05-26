@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Swagger;
 
 /**
  * @OA\Post(
- *       path="/api/recipe",
+ *       path="/api/recipes",
  *       summary="Create a new recipe",
  *       tags={"Recipes"},
  *       @OA\RequestBody(
@@ -111,7 +111,7 @@ namespace App\Http\Controllers\Swagger;
  *       security={{"bearerAuth":{}}}
  * )
  * @OA\Post(
- *        path="/api/recipe/{id}/update",
+ *        path="/api/recipes/{id}/update",
  *        summary="Update an existing recipe",
  *        tags={"Recipes"},
  *        @OA\Parameter(
@@ -225,7 +225,7 @@ namespace App\Http\Controllers\Swagger;
  *        security={{"bearerAuth":{}}}
  *  )
  * @OA\Get(
- *       path="/api/users/recipe",
+ *       path="/api/users/recipes",
  *       summary="Retrieve list of recipes for authenticated user",
  *       tags={"Recipes"},
  *       @OA\Response(
@@ -284,7 +284,7 @@ namespace App\Http\Controllers\Swagger;
  *       security={{"bearerAuth":{}}}
  *  )
  * @OA\Delete(
- *       path="/api/recipe/{id}",
+ *       path="/api/recipes/{id}",
  *       summary="Delete a recipe",
  *       tags={"Recipes"},
  *       @OA\Parameter(
@@ -323,7 +323,7 @@ namespace App\Http\Controllers\Swagger;
  *       security={{"bearerAuth":{}}}
  *  )
  * @OA\Get(
- *       path="/api/recipe",
+ *       path="/api/recipes",
  *       summary="Retrieve all recipes",
  *       tags={"Recipes"},
  *       @OA\Response(
@@ -382,7 +382,7 @@ namespace App\Http\Controllers\Swagger;
  *       security={{"bearerAuth":{}}}
  *  )
  * @OA\Get(
- *       path="/api/recipe/{id}",
+ *       path="/api/recipes/{id}",
  *       summary="Retrieve a specific recipe",
  *       tags={"Recipes"},
  *       @OA\Parameter(

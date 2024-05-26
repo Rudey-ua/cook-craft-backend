@@ -6,6 +6,7 @@ use App\Http\Controllers\API\PaymentWebhookController;
 use App\Http\Controllers\API\PlanController;
 use App\Http\Controllers\API\RecipeController;
 use App\Http\Controllers\API\SubscriptionController;
+use App\Http\Controllers\API\TagController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,17 +30,22 @@ Route::controller(AuthorizationController::class)->group(function () {
 Route::group(['middleware' => ['auth:sanctum']],  function() {
 
     Route::controller(RecipeController::class)->group(function () {
-        Route::get('/recipe', 'index');
-        Route::get('/recipe/{id}', 'show');
-        Route::post('/recipe', 'store');
-        Route::post('/recipe/{id}/update', 'update');
-        Route::delete('/recipe/{id}', 'destroy');
+        Route::get('/recipes', 'index');
+        Route::get('/recipes/{id}', 'show');
+        Route::post('/recipes', 'store');
+        Route::post('/recipes/{id}/update', 'update');
+        Route::delete('/recipes/{id}', 'destroy');
     });
+
+    Route::controller(TagController::class)->group(function () {
+        Route::get('/tag', 'index');
+    });
+
 
     Route::prefix('users')->controller(UserController::class)->group(function () {
         Route::get('/profile', 'getProfileData');
         Route::post('/update', 'updateProfile');
-        Route::get('/recipe', 'getUserRecipes');
+        Route::get('/recipes', 'getUserRecipes');
     });
 
     Route::controller(SubscriptionController::class)->group(function () {
