@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthorizationController;
+use App\Http\Controllers\API\CommentController;
 use App\Http\Controllers\API\PaymentCallbackController;
 use App\Http\Controllers\API\PaymentWebhookController;
 use App\Http\Controllers\API\PlanController;
@@ -35,6 +36,13 @@ Route::group(['middleware' => ['auth:sanctum']],  function() {
         Route::post('/recipes', 'store');
         Route::post('/recipes/{id}/update', 'update');
         Route::delete('/recipes/{id}', 'destroy');
+    });
+
+    Route::controller(CommentController::class)->group(function () {
+        Route::get('/recipes/{id}/comments', 'show');
+        Route::post('/comments', 'store');
+        Route::post('/comments/{id}/update', 'update');
+        Route::delete('/comments/{id}', 'destroy');
     });
 
     Route::prefix('users')->controller(UserController::class)->group(function () {
