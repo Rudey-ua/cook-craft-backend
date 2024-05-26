@@ -112,7 +112,7 @@ namespace App\Http\Controllers\Swagger;
  * )
  * @OA\Get(
  *       path="/api/users/recipe",
- *       summary="Retrieve list of recipes for specific user",
+ *       summary="Retrieve list of recipes for authenticated user",
  *       tags={"Recipes"},
  *       @OA\Response(
  *           response=200,
