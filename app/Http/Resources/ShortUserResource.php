@@ -2,12 +2,13 @@
 
 namespace App\Http\Resources;
 
-use App\Models\User;
+use App\Traits\FIleTrait;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CommentResource extends JsonResource
+class ShortUserResource extends JsonResource
 {
+    use FIleTrait;
     /**
      * Transform the resource into an array.
      *
@@ -17,11 +18,8 @@ class CommentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
-            'rate' => $this->rate,
-            'recipe_id' => $this->recipe_id,
-            'user_id' => new ShortUserResource(User::find($this->user_id)),
-            'created_at' => $this->created_at->toDateTimeString(),
+            'firstname' => $this->firstname,
+            'profile_image' => $this->getProfileImageUrl($this->profile_image),
         ];
     }
 }
