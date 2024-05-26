@@ -59,7 +59,8 @@ class RecipeService
             steps: array_map(fn($step) => new StepData(
                 $step['description'],
                 array_map(fn($photo) => $photo, $step['photos'])
-            ), $validatedData['steps'])
+            ), $validatedData['steps']),
+            tags: $validatedData['tags'] ?? null
         );
     }
 }
