@@ -509,6 +509,229 @@
                 ]
             }
         },
+        "/api/favourites": {
+            "post": {
+                "tags": [
+                    "Favourites"
+                ],
+                "summary": "Add a recipe to the favourite list of the authenticated user",
+                "operationId": "a29d090cce7ed58b7b1c2315316dab03",
+                "requestBody": {
+                    "description": "Payload to add a recipe to favourites",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "recipe_id"
+                                ],
+                                "properties": {
+                                    "recipe_id": {
+                                        "type": "integer",
+                                        "example": 34
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Recipe added to favourites successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 14
+                                        },
+                                        "user_id": {
+                                            "type": "integer",
+                                            "example": 14
+                                        },
+                                        "recipe": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 34
+                                                },
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Chimichurri Sauce Update"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "This famous Argentinian chimichurri sauce is perfect for any grilled chicken, meat, or fish. My catering customers love it on garlic crostini with grilled flank steak slices."
+                                                },
+                                                "cooking_time": {
+                                                    "type": "integer",
+                                                    "example": 130
+                                                },
+                                                "difficulty_level": {
+                                                    "type": "string",
+                                                    "example": "medium"
+                                                },
+                                                "portions": {
+                                                    "type": "integer",
+                                                    "example": 4
+                                                },
+                                                "is_approved": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "is_published": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "cover_photo": {
+                                                    "type": "string",
+                                                    "example": "localhost/storage/recipe_cover_photos/66531b1015de57.87205594_23dd31f39f75c3852fd6c1f6a9d915c3662a3f7689970.jpeg"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - Error if the recipe is already in the favourite list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "You already added recipe to favourite list!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "An error occurred"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/favorites/recipes/{id}": {
+            "delete": {
+                "tags": [
+                    "Favourites"
+                ],
+                "summary": "Remove a recipe from the favourite list of the authenticated user",
+                "operationId": "7fe14bf450dcb7ef4b2986a69a3e210b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Recipe ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Recipe removed from favourites successfully, no content to return"
+                    },
+                    "404": {
+                        "description": "Not Found - Specified recipe doesn't exist in favourites",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Specified recipe doesn't exist!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "An error occurred"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/plans": {
             "get": {
                 "tags": [
@@ -2262,7 +2485,7 @@
         "/api/users/profile": {
             "get": {
                 "tags": [
-                    "Profile"
+                    "Users"
                 ],
                 "summary": "Retrieve user profile",
                 "operationId": "09c7b3718d0e7d50b9fa4f9b293813ef",
@@ -2399,7 +2622,7 @@
         "/api/users/update": {
             "post": {
                 "tags": [
-                    "Profile"
+                    "Users"
                 ],
                 "summary": "Update user profile",
                 "operationId": "f515602837678c58b8b57341c70465ea",
@@ -2579,6 +2802,118 @@
                                         "error": {
                                             "type": "string",
                                             "example": "Invalid data provided"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/users/favourites": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Retrieve all favourite recipes of the authenticated user",
+                "operationId": "d315a1b1862bd2d7e944d6a3fc098428",
+                "responses": {
+                    "200": {
+                        "description": "Favourite recipes retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 13
+                                            },
+                                            "user_id": {
+                                                "type": "integer",
+                                                "example": 14
+                                            },
+                                            "recipe": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 34
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "Chimichurri Sauce Update"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "This famous Argentinian chimichurri sauce is perfect for any grilled chicken, meat, or fish. My catering customers love it on garlic crostini with grilled flank steak slices."
+                                                    },
+                                                    "cooking_time": {
+                                                        "type": "integer",
+                                                        "example": 130
+                                                    },
+                                                    "difficulty_level": {
+                                                        "type": "string",
+                                                        "example": "medium"
+                                                    },
+                                                    "portions": {
+                                                        "type": "integer",
+                                                        "example": 4
+                                                    },
+                                                    "is_approved": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    },
+                                                    "is_published": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    },
+                                                    "cover_photo": {
+                                                        "type": "string",
+                                                        "example": "localhost/storage/recipe_cover_photos/66531b1015de57.87205594_23dd31f39f75c3852fd6c1f6a9d915c3662a3f7689970.jpeg"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "An error occurred"
                                         }
                                     },
                                     "type": "object"

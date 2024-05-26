@@ -105,7 +105,7 @@ namespace App\Http\Controllers\Swagger;
  * @OA\Get(
  *       path="/api/users/profile",
  *       summary="Retrieve user profile",
- *       tags={"Profile"},
+ *       tags={"Users"},
  *       security={{"bearerAuth":{}}},
  *       @OA\Response(
  *           response=200,
@@ -152,7 +152,7 @@ namespace App\Http\Controllers\Swagger;
  * @OA\Post(
  *       path="/api/users/update",
  *       summary="Update user profile",
- *       tags={"Profile"},
+ *       tags={"Users"},
  *       @OA\RequestBody(
  *           required=true,
  *           @OA\MediaType(
@@ -221,6 +221,51 @@ namespace App\Http\Controllers\Swagger;
  *           )
  *       ),
  *       security={{"bearerAuth":{}}}
+ *  )
+ * @OA\Get(
+ *       path="/api/users/favourites",
+ *       summary="Retrieve all favourite recipes of the authenticated user",
+ *       tags={"Users"},
+ *       security={{"bearerAuth":{}}},
+ *       @OA\Response(
+ *           response=200,
+ *           description="Favourite recipes retrieved successfully",
+ *           @OA\JsonContent(
+ *               type="array",
+ *               @OA\Items(
+ *                   type="object",
+ *                   @OA\Property(property="id", type="integer", example=13),
+ *                   @OA\Property(property="user_id", type="integer", example=14),
+ *                   @OA\Property(
+ *                       property="recipe",
+ *                       type="object",
+ *                       @OA\Property(property="id", type="integer", example=34),
+ *                       @OA\Property(property="title", type="string", example="Chimichurri Sauce Update"),
+ *                       @OA\Property(property="description", type="string", example="This famous Argentinian chimichurri sauce is perfect for any grilled chicken, meat, or fish. My catering customers love it on garlic crostini with grilled flank steak slices."),
+ *                       @OA\Property(property="cooking_time", type="integer", example=130),
+ *                       @OA\Property(property="difficulty_level", type="string", example="medium"),
+ *                       @OA\Property(property="portions", type="integer", example=4),
+ *                       @OA\Property(property="is_approved", type="boolean", example=true),
+ *                       @OA\Property(property="is_published", type="boolean", example=true),
+ *                       @OA\Property(property="cover_photo", type="string", example="localhost/storage/recipe_cover_photos/66531b1015de57.87205594_23dd31f39f75c3852fd6c1f6a9d915c3662a3f7689970.jpeg")
+ *                   )
+ *               )
+ *           )
+ *       ),
+ *       @OA\Response(
+ *           response=401,
+ *           description="Unauthorized",
+ *           @OA\JsonContent(
+ *               @OA\Property(property="message", type="string", example="Unauthorized")
+ *           )
+ *       ),
+ *       @OA\Response(
+ *           response=500,
+ *           description="Internal Server Error",
+ *           @OA\JsonContent(
+ *               @OA\Property(property="message", type="string", example="An error occurred")
+ *           )
+ *       )
  *  )
  */
 class UserController

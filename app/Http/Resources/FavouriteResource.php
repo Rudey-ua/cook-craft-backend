@@ -3,7 +3,6 @@
 namespace App\Http\Resources;
 
 use App\Models\Recipe;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,8 +16,9 @@ class FavouriteResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'user' => new ShortUserResource(User::findOrFail($this->user_id)),
-            'recipe' => new RecipeResource(Recipe::findOrFail($this->recipe_id))
+            'id' => $this->id,
+            'user_id' => $this->user_id,
+            'recipe' => new ShortRecipeResource(Recipe::findOrFail($this->recipe_id))
         ];
     }
 }
