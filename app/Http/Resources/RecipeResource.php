@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\User;
 use App\Traits\FIleTrait;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -18,9 +19,9 @@ class RecipeResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user_id' => $this->user_id,
             'title' => $this->title,
             'description' => $this->description,
+            'user' => new ShortUserResource(User::findOrFail($this->user_id)),
             'cooking_time' => $this->cooking_time,
             'difficulty_level' => $this->difficulty_level,
             'portions' => $this->portions,
