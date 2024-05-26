@@ -343,6 +343,14 @@
                                             },
                                             "type": "object"
                                         }
+                                    },
+                                    "tags": {
+                                        "description": "List of tag IDs",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer",
+                                            "example": 1
+                                        }
                                     }
                                 },
                                 "type": "object"
@@ -439,6 +447,22 @@
                                                             "type": "string",
                                                             "example": "localhost/storage/recipe_step_photos/665242f029f650.05616623_ER-zemfyra.drawio.png"
                                                         }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "tags": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "healthy"
                                                     }
                                                 },
                                                 "type": "object"
@@ -609,6 +633,14 @@
                                             },
                                             "type": "object"
                                         }
+                                    },
+                                    "tags": {
+                                        "description": "List of tag IDs",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer",
+                                            "example": 1
+                                        }
                                     }
                                 },
                                 "type": "object"
@@ -705,6 +737,22 @@
                                                             "type": "string",
                                                             "example": "localhost/storage/recipe_step_photos/665242f029f650.05616623_ER-zemfyra.drawio.png"
                                                         }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "tags": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "healthy"
                                                     }
                                                 },
                                                 "type": "object"
