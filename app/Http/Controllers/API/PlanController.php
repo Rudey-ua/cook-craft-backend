@@ -10,9 +10,8 @@ use Illuminate\Http\Request;
 
 class PlanController extends Controller
 {
-    use ApiResponseHelpers;
     public function index()
     {
-        return $this->respondWithSuccess(PlanResource::collection(Plan::all()));
+        return PlanResource::collection(Plan::all());
     }
 }

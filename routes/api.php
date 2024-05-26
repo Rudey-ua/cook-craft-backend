@@ -37,11 +37,6 @@ Route::group(['middleware' => ['auth:sanctum']],  function() {
         Route::delete('/recipes/{id}', 'destroy');
     });
 
-    Route::controller(TagController::class)->group(function () {
-        Route::get('/tag', 'index');
-    });
-
-
     Route::prefix('users')->controller(UserController::class)->group(function () {
         Route::get('/profile', 'getProfileData');
         Route::post('/update', 'updateProfile');
@@ -54,6 +49,7 @@ Route::group(['middleware' => ['auth:sanctum']],  function() {
         Route::get('/users/subscription/details', 'getUserSubscriptionInfo');
     });
     Route::get('/plans', [PlanController::class, 'index']);
+    Route::get('/tags', [TagController::class, 'index']);
 });
 
 Route::any('/webhooks/payment/{service}', PaymentWebhookController::class);
