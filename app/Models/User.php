@@ -60,4 +60,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Recipe::class, 'user_id', 'id');
     }
+
+    public function favourites() : HasMany
+    {
+        return $this->hasMany(Favorite::class, 'user_id', 'id');
+    }
 }

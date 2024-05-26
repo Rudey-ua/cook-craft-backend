@@ -10,21 +10,22 @@ use App\Models\Favorite;
 use App\Repositories\FavouriteRepository;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Auth;
 
 class FavouriteController extends Controller
 {
     use ApiResponseHelpers;
 
     public function __construct(protected FavouriteRepository $favouriteRepository)
+    {}
+
+    public function show(): AnonymousResourceCollection
     {
+        return FavouriteResource::collection(Auth::user()->favourites);
     }
 
-    public function show()
-    {
-
-    }
-
-    public function store(FavouriteRequest $favouriteRequest)
+    public function store(FavouriteRequest $favouriteRequest): JsonResponse|FavouriteResource
     {
         $validated = $favouriteRequest->validated();
 
