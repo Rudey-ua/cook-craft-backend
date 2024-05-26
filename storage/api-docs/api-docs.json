@@ -99,6 +99,143 @@
             }
         },
         "/api/recipe": {
+            "get": {
+                "tags": [
+                    "Recipes"
+                ],
+                "summary": "Retrieve all recipes",
+                "operationId": "e2037750966074906f22f6b94a77bf53",
+                "responses": {
+                    "200": {
+                        "description": "List of recipes retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 27
+                                            },
+                                            "user_id": {
+                                                "type": "integer",
+                                                "example": 14
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "example": "Chimichurri Sauce"
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "example": "This famous Argentinian chimichurri sauce is perfect for any grilled chicken, meat, or fish. My catering customers love it on garlic crostini with grilled flank steak slices."
+                                            },
+                                            "cooking_time": {
+                                                "type": "integer",
+                                                "example": 120
+                                            },
+                                            "difficulty_level": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "easy",
+                                                    "medium",
+                                                    "hard"
+                                                ],
+                                                "example": "medium"
+                                            },
+                                            "portions": {
+                                                "type": "integer",
+                                                "example": 4
+                                            },
+                                            "is_approved": {
+                                                "type": "boolean",
+                                                "example": true
+                                            },
+                                            "is_published": {
+                                                "type": "boolean",
+                                                "example": true
+                                            },
+                                            "cover_photo": {
+                                                "type": "string",
+                                                "example": "localhost/storage/recipe_cover_photos/6652fff7a26a07.95597645_vegetarian-recipes-1.jpg"
+                                            },
+                                            "ingredients": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 55
+                                                        },
+                                                        "title": {
+                                                            "type": "string",
+                                                            "example": "fresh parsley"
+                                                        },
+                                                        "measure": {
+                                                            "type": "string",
+                                                            "example": "cup"
+                                                        },
+                                                        "count": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "steps": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 46
+                                                        },
+                                                        "description": {
+                                                            "type": "string",
+                                                            "example": "Combine parsley, oil, vinegar, oregano, cumin, garlic, hot sauce, and salt in a blender or food processor. Mix on medium speed until ingredients are evenly blended, about 10 seconds."
+                                                        },
+                                                        "photos": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "string",
+                                                                "example": "localhost/storage/recipe_step_photos/6652fff7a3ac26.95732310_k_Photo_Recipe_Ramp_Up_2022-02-Air-Fryer-Roasted-Potatoes_IMG_6850.jpeg"
+                                                            }
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Invalid request parameters"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
             "post": {
                 "tags": [
                     "Recipes"
@@ -477,6 +614,226 @@
                                         "error": {
                                             "type": "string",
                                             "example": "Invalid request parameters"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/recipe/{id}": {
+            "get": {
+                "tags": [
+                    "Recipes"
+                ],
+                "summary": "Retrieve a specific recipe",
+                "operationId": "c5c6a4330c142151e53c1e0eaf2b1d41",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the recipe to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Recipe retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 27
+                                        },
+                                        "user_id": {
+                                            "type": "integer",
+                                            "example": 14
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Chimichurri Sauce"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "This famous Argentinian chimichurri sauce is perfect for any grilled chicken, meat, or fish. My catering customers love it on garlic crostini with grilled flank steak slices."
+                                        },
+                                        "cooking_time": {
+                                            "type": "integer",
+                                            "example": 120
+                                        },
+                                        "difficulty_level": {
+                                            "type": "string",
+                                            "enum": [
+                                                "easy",
+                                                "medium",
+                                                "hard"
+                                            ],
+                                            "example": "medium"
+                                        },
+                                        "portions": {
+                                            "type": "integer",
+                                            "example": 4
+                                        },
+                                        "is_approved": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "is_published": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "cover_photo": {
+                                            "type": "string",
+                                            "example": "localhost/storage/recipe_cover_photos/6652fff7a26a07.95597645_vegetarian-recipes-1.jpg"
+                                        },
+                                        "ingredients": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 55
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "fresh parsley"
+                                                    },
+                                                    "measure": {
+                                                        "type": "string",
+                                                        "example": "cup"
+                                                    },
+                                                    "count": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "steps": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 46
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "Combine parsley, oil, vinegar, oregano, cumin, garlic, hot sauce, and salt in a blender or food processor. Mix on medium speed until ingredients are evenly blended, about 10 seconds."
+                                                    },
+                                                    "photos": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string",
+                                                            "example": "localhost/storage/recipe_step_photos/6652fff7a3ac26.95732310_k_Photo_Recipe_Ramp_Up_2022-02-Air-Fryer-Roasted-Potatoes_IMG_6850.jpeg"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Recipe not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Recipe with the specified ID not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Recipes"
+                ],
+                "summary": "Delete a recipe",
+                "operationId": "9282b79477672f649a8cd7bb96b62003",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the recipe to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Recipe deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Recipe deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Recipe not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Recipe with the specified ID not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Authentication credentials were not provided or are invalid"
                                         }
                                     },
                                     "type": "object"
