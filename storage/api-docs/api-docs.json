@@ -358,7 +358,7 @@
                 "tags": [
                     "Recipes"
                 ],
-                "summary": "Retrieve list of recipes for specific user",
+                "summary": "Retrieve list of recipes for authenticated user",
                 "operationId": "f99b0e97fc036aaf5e9eb44d08388582",
                 "responses": {
                     "200": {
