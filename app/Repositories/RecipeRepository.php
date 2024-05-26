@@ -24,6 +24,7 @@ class RecipeRepository
             $recipe = $this->createRecipe($recipeData);
             $this->createIngredients($recipe->id, $recipeData->ingredients);
             $this->createSteps($recipe->id, $recipeData->steps);
+            !empty($recipeData->tags) ? $this->syncTags($recipe, $recipeData->tags) : null;
 
             return $recipe;
         });
@@ -62,12 +63,18 @@ class RecipeRepository
         }
     }
 
+    protected function syncTags(Recipe $recipe, array $tagIds): void
+    {
+        $recipe->tags()->sync($tagIds);
+    }
+
     public function updateRecipeWithDetails(int $recipeId, RecipeData $recipeData): Recipe
     {
         return DB::transaction(function () use ($recipeId, $recipeData) {
             $recipe = $this->updateRecipe($recipeId, $recipeData);
             $this->updateIngredients($recipeId, $recipeData->ingredients);
             $this->updateSteps($recipeId, $recipeData->steps);
+            !empty($recipeData->tags) ? $this->syncTags($recipe, $recipeData->tags) : null;
 
             return $recipe;
         });

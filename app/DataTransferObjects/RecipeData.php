@@ -17,7 +17,8 @@ class RecipeData
         public readonly bool $is_published,
         public readonly UploadedFile $coverPhoto,
         public readonly array $ingredients,
-        public readonly array $steps
+        public readonly array $steps,
+        public readonly ?array $tags
     ) {
     }
 

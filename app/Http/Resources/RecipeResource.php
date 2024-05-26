@@ -28,7 +28,8 @@ class RecipeResource extends JsonResource
             'is_published' => $this->is_published,
             'cover_photo' => $this->getRecipeCoverPhoto($this->cover_photo),
             'ingredients' => IngredientResource::collection($this->ingredients),
-            'steps' => StepResource::collection($this->steps)
+            'steps' => StepResource::collection($this->steps),
+            'tags' => TagResource::collection($this->tags)
         ];
     }
 }

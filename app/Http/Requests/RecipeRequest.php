@@ -37,7 +37,8 @@ class RecipeRequest extends FormRequest
             'steps' => 'required|array|min:1',
             'steps.*.description' => 'required|string|max:1000',
             'steps.*.photos' => 'array|nullable',
-            'steps.*.photos.*' => 'file|mimes:jpg,jpeg,png|max:2048'
+            'steps.*.photos.*' => 'file|mimes:jpg,jpeg,png|max:2048',
+            'tags.*' => 'nullable|exists:tags,id'
         ];
     }
 }
