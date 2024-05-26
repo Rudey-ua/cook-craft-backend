@@ -490,6 +490,272 @@
                 ]
             }
         },
+        "/api/recipe/{id}/update": {
+            "post": {
+                "tags": [
+                    "Recipes"
+                ],
+                "summary": "Update an existing recipe",
+                "operationId": "57f527651376cdb4470eb5f7e8ee2690",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the recipe to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "userId": {
+                                        "description": "User ID",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "title": {
+                                        "description": "Recipe title",
+                                        "type": "string",
+                                        "example": "Chocolate Cake"
+                                    },
+                                    "description": {
+                                        "description": "Recipe description",
+                                        "type": "string",
+                                        "example": "A delicious and easy-to-make chocolate cake."
+                                    },
+                                    "cooking_time": {
+                                        "description": "Cooking time in minutes",
+                                        "type": "integer",
+                                        "example": 120
+                                    },
+                                    "difficulty_level": {
+                                        "description": "Difficulty level",
+                                        "type": "string",
+                                        "enum": [
+                                            "easy",
+                                            "medium",
+                                            "hard"
+                                        ],
+                                        "example": "medium"
+                                    },
+                                    "portions": {
+                                        "description": "Number of portions",
+                                        "type": "integer",
+                                        "example": 8
+                                    },
+                                    "is_approved": {
+                                        "description": "Is the recipe approved?",
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "is_published": {
+                                        "description": "Is the recipe published?",
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "cover_photo": {
+                                        "description": "Cover photo file",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "ingredients": {
+                                        "description": "List of ingredients",
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "title": {
+                                                    "description": "Ingredient title",
+                                                    "type": "string",
+                                                    "example": "Flour"
+                                                },
+                                                "measure": {
+                                                    "description": "Measurement unit",
+                                                    "type": "string",
+                                                    "example": "grams"
+                                                },
+                                                "count": {
+                                                    "description": "Quantity",
+                                                    "type": "integer",
+                                                    "example": 500
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "steps": {
+                                        "description": "List of steps",
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "description": {
+                                                    "description": "Step description",
+                                                    "type": "string",
+                                                    "example": "Mix flour and softened butter until crumbly."
+                                                },
+                                                "photos": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "description": "Step photo files",
+                                                        "type": "string",
+                                                        "format": "binary"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Recipe updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 22
+                                        },
+                                        "user_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Chocolate Cake"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "A delicious and easy-to-make chocolate cake."
+                                        },
+                                        "cooking_time": {
+                                            "type": "integer",
+                                            "example": 120
+                                        },
+                                        "difficulty_level": {
+                                            "type": "string",
+                                            "example": "medium"
+                                        },
+                                        "portions": {
+                                            "type": "integer",
+                                            "example": 8
+                                        },
+                                        "is_approved": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "is_published": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "cover_photo": {
+                                            "type": "string",
+                                            "example": "localhost/storage/recipe_cover_photo/665242f0280d43.98726136_23dd31f39f75c3852fd6c1f6a9d915c3662a3f7689970.jpeg"
+                                        },
+                                        "ingredients": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 45
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "Flour"
+                                                    },
+                                                    "measure": {
+                                                        "type": "string",
+                                                        "example": "grams"
+                                                    },
+                                                    "count": {
+                                                        "type": "integer",
+                                                        "example": 500
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "steps": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 36
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "Mix flour and softened butter until crumbly."
+                                                    },
+                                                    "photos": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string",
+                                                            "example": "localhost/storage/recipe_step_photos/665242f029f650.05616623_ER-zemfyra.drawio.png"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - Incorrect Data Provided",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Invalid data provided"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "An error occurred"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/users/recipe": {
             "get": {
                 "tags": [

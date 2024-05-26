@@ -43,4 +43,18 @@ trait FIleTrait
             return Storage::disk('public')->url('recipe_step_photos/' . $filename);
         }, $filenames);
     }
+
+    protected function deleteOldCoverRecipeImage($filename): void
+    {
+        if ($filename && Storage::disk('public')->exists('recipe_cover_photos/' . $filename)) {
+            Storage::disk('public')->delete('recipe_cover_photos/' . $filename);
+        }
+    }
+
+    protected function deleteOldStepRecipeImage($filename): void
+    {
+        if ($filename && Storage::disk('public')->exists('recipe_step_photos/' . $filename)) {
+            Storage::disk('public')->delete('recipe_step_photos/' . $filename);
+        }
+    }
 }

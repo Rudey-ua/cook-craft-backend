@@ -61,4 +61,65 @@ class RecipeRepository
             $this->stepModel->create(array_merge($stepDataArray, ['recipe_id' => $recipeId]));
         }
     }
+
+    public function updateRecipeWithDetails(int $recipeId, RecipeData $recipeData): Recipe
+    {
+        return DB::transaction(function () use ($recipeId, $recipeData) {
+            $recipe = $this->updateRecipe($recipeId, $recipeData);
+            $this->updateIngredients($recipeId, $recipeData->ingredients);
+            $this->updateSteps($recipeId, $recipeData->steps);
+
+            return $recipe;
+        });
+    }
+
+    protected function updateRecipe(int $recipeId, RecipeData $recipeData): Recipe
+    {
+        $recipe = $this->recipeModel->findOrFail($recipeId);
+        $recipeDataArray = $recipeData->toArray();
+
+        if (!empty($recipeData->coverPhoto)) {
+            if (!empty($recipe->cover_photo)) {
+                $this->deleteOldCoverRecipeImage($recipe->cover_photo);
+            }
+            $filename = $this->uploadFile($recipeData->coverPhoto, 'recipe_cover_photos');
+            $recipeDataArray['cover_photo'] = $filename;
+        }
+        $recipe->update($recipeDataArray);
+
+        return $recipe;
+    }
+
+    protected function updateIngredients(int $recipeId, array $ingredients): void
+    {
+        $this->ingredientModel->where('recipe_id', $recipeId)->delete();
+
+        foreach ($ingredients as $ingredientData) {
+            $this->ingredientModel->create(array_merge($ingredientData->toArray(), ['recipe_id' => $recipeId]));
+        }
+    }
+
+    protected function updateSteps(int $recipeId, array $steps): void
+    {
+        $existingSteps = $this->stepModel->where('recipe_id', $recipeId)->get();
+
+        foreach ($existingSteps as $step) {
+            $oldPhotos = json_decode($step->photos, true) ?? [];
+            foreach ($oldPhotos as $oldPhoto) {
+                $this->deleteOldStepRecipeImage($oldPhoto);
+            }
+        }
+        $this->stepModel->where('recipe_id', $recipeId)->delete();
+
+        foreach ($steps as $stepData) {
+            $stepDataArray = $stepData->toArray();
+
+            if (!empty($stepData->photos)) {
+                $stepDataArray['photos'] = json_encode(array_map(function ($photo) {
+                    return $this->uploadFile($photo, 'recipe_step_photos');
+                }, $stepData->photos));
+            }
+            $this->stepModel->create(array_merge($stepDataArray, ['recipe_id' => $recipeId]));
+        }
+    }
 }

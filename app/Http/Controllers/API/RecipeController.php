@@ -6,14 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RecipeRequest;
 use App\Http\Resources\RecipeResource;
 use App\Models\Recipe;
+use App\Repositories\RecipeRepository;
 use App\Services\RecipeService;
 use F9Web\ApiResponseHelpers;
-use Illuminate\Http\Request;
 
 class RecipeController extends Controller
 {
     use ApiResponseHelpers;
-    public function __construct(protected RecipeService $recipeService)
+    public function __construct(protected RecipeService $recipeService, protected RecipeRepository $recipeRepository)
     {
     }
 
@@ -37,6 +37,18 @@ class RecipeController extends Controller
             $recipe = $this->recipeService->createRecipe($validated);
         } catch (\Exception $e) {
             return $e->getMessage();
+        }
+        return new RecipeResource($recipe);
+    }
+
+    public function update(RecipeRequest $recipeRequest, int $id)
+    {
+        $validated = $recipeRequest->validated();
+
+        try {
+            $recipe = $this->recipeService->updateRecipe($id, $validated);
+        } catch (\Exception $e) {
+            return $this->respondError($e->getMessage());
         }
         return new RecipeResource($recipe);
     }
