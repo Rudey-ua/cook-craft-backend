@@ -41,6 +41,20 @@ class SubscriberController extends Controller
 
     public function unsubscribe(SubscriberRequest $subscriberRequest)
     {
+        $validated = $subscriberRequest->validated();
 
+        try {
+            $deleted = $this->subscriberRepository->destroy(
+                new SubscriberData(
+                    authorId: $validated['author_id'],
+                    userId: auth()->user()->id
+                )
+            );
+        } catch (\Exception $e) {
+            return $this->respondError($e->getMessage());
+        }
+        return $deleted
+            ? $this->respondOk(__("You successfully unsubscribed from the author!"))
+            : $this->respondError(__("Failed to unsubscribe from the author!"));
     }
 }
