@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\RecipePublished;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RecipeRequest;
 use App\Http\Resources\RecipeResource;
@@ -35,6 +36,7 @@ class RecipeController extends Controller
 
         try {
             $recipe = $this->recipeService->createRecipe($validated);
+            event(new RecipePublished($recipe));
         } catch (\Exception $e) {
             return $e->getMessage();
         }
