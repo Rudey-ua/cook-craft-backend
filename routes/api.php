@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AuthorizationController;
 use App\Http\Controllers\API\CommentController;
+use App\Http\Controllers\API\FavouriteController;
 use App\Http\Controllers\API\PaymentCallbackController;
 use App\Http\Controllers\API\PaymentWebhookController;
 use App\Http\Controllers\API\PlanController;
@@ -36,6 +37,12 @@ Route::group(['middleware' => ['auth:sanctum']],  function() {
         Route::post('/recipes', 'store');
         Route::post('/recipes/{id}/update', 'update');
         Route::delete('/recipes/{id}', 'destroy');
+    });
+
+    Route::controller(FavouriteController::class)->group(function () {
+        Route::get('/users/favourites', 'show');
+        Route::post('/favourites', 'store');
+        Route::delete('/favorites/recipes/{id}', 'destroy');
     });
 
     Route::controller(CommentController::class)->group(function () {
