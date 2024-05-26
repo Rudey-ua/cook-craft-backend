@@ -25,7 +25,7 @@ class UpdateProfileRequest extends FormRequest
         return [
             'firstName' => 'nullable|string|min:3',
             'lastName' => 'nullable|string|min:3',
-            'email' => 'nullable|email|unique:users',
+            'email' => 'nullable|email',
             'password' => ['nullable', Password::min(8)->letters()->numbers()],
             'birthDate' => 'nullable|date|before_or_equal:today',
             'profileImage' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
