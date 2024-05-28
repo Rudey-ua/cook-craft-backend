@@ -42,6 +42,7 @@ class AuthorizationController extends Controller
 
             return $this->respondWithSuccess([
                 'token' => $token,
+                'id' => $user->id
             ]);
         });
     }
@@ -58,6 +59,7 @@ class AuthorizationController extends Controller
 
         return response()->json([
             'token' => $token,
+            'id' => $user->id
         ]);
     }
 
