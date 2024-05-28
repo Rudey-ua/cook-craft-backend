@@ -41,8 +41,8 @@ class AuthorizationController extends Controller
             $token = $user->createToken('auth_token')->plainTextToken;
 
             return $this->respondWithSuccess([
-                'token' => $token,
-                'id' => $user->id
+                'id' => $user->id,
+                'token' => $token
             ]);
         });
     }
@@ -58,8 +58,8 @@ class AuthorizationController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'token' => $token,
-            'id' => $user->id
+            'id' => $user->id,
+            'token' => $token
         ]);
     }
 
