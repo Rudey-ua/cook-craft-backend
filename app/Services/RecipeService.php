@@ -48,8 +48,6 @@ class RecipeService
             cooking_time: $validatedData['cooking_time'],
             difficulty_level: $validatedData['difficulty_level'],
             portions: $validatedData['portions'],
-            is_approved: $validatedData['is_approved'],
-            is_published: $validatedData['is_published'],
             coverPhoto: $validatedData['cover_photo'],
             ingredients: array_map(fn($ingredient) => new IngredientData(
                 $ingredient['title'],

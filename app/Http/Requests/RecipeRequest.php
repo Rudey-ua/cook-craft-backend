@@ -27,8 +27,6 @@ class RecipeRequest extends FormRequest
             'cooking_time' => 'required|integer|min:1',
             'difficulty_level' => 'required|in:easy,medium,hard',
             'portions' => 'required|integer|min:1',
-            'is_approved' => 'required|boolean',
-            'is_published' => 'required|boolean',
             'cover_photo' => 'required|file|max:2048',
             'ingredients' => 'required|array|min:1',
             'ingredients.*.title' => 'required|string|max:255',
