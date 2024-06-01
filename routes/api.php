@@ -32,11 +32,6 @@ Route::controller(AuthorizationController::class)->group(function () {
 
 Route::group(['middleware' => ['auth:sanctum']],  function() {
 
-    Route::controller(SubscriberController::class)->group(function () {
-        Route::post('/subscribe', 'subscribe');
-        Route::post('/unsubscribe', 'unsubscribe');
-    });
-
     Route::controller(RecipeController::class)->group(function () {
         Route::get('/recipes', 'index');
         Route::get('/recipes/{id}', 'show');
@@ -71,6 +66,11 @@ Route::group(['middleware' => ['auth:sanctum']],  function() {
     });
     Route::get('/plans', [PlanController::class, 'index']);
     Route::get('/tags', [TagController::class, 'index']);
+
+    Route::controller(SubscriberController::class)->group(function () {
+        Route::post('/subscribe', 'subscribe');
+        Route::post('/unsubscribe', 'unsubscribe');
+    });
 });
 
 Route::any('/webhooks/payment/{service}', PaymentWebhookController::class);

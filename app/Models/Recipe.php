@@ -37,4 +37,9 @@ class Recipe extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function countAverageRatingForRecipe(): float|int|null
+    {
+        return $this->comments->avg('rate');
+    }
 }
