@@ -2928,6 +2928,242 @@
                     }
                 ]
             }
+        },
+        "/api/subscribe": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Subscribe to an author",
+                "operationId": "8cdf93263f8ba90750ae5cb328d83fde",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "author_id"
+                                ],
+                                "properties": {
+                                    "author_id": {
+                                        "type": "integer",
+                                        "example": 14
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Subscription successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 10
+                                        },
+                                        "author_id": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 14
+                                                },
+                                                "firstname": {
+                                                    "type": "string",
+                                                    "example": "Bahram"
+                                                },
+                                                "profile_image": {
+                                                    "type": "string",
+                                                    "example": "localhost/storage/profile_images/66536e2ccf5072.24948606_23dd31f39f75c3852fd6c1f6a9d915c3662a3f7689970.jpeg"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "user_id": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 14
+                                                },
+                                                "firstname": {
+                                                    "type": "string",
+                                                    "example": "Bahram"
+                                                },
+                                                "profile_image": {
+                                                    "type": "string",
+                                                    "example": "localhost/storage/profile_images/66536e2ccf5072.24948606_23dd31f39f75c3852fd6c1f6a9d915c3662a3f7689970.jpeg"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "subscribers_count": {
+                                            "type": "integer",
+                                            "example": 2
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "You have already subscribed to this author!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "An error occurred"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/unsubscribe": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Unsubscribe from an author",
+                "operationId": "3ff2db8e8d0b0f379919331c32679b0b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "author_id"
+                                ],
+                                "properties": {
+                                    "author_id": {
+                                        "type": "integer",
+                                        "example": 14
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully unsubscribed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "string",
+                                            "example": "You successfully unsubscribed from the author!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Failed to unsubscribe from the author!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "An error occurred"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {

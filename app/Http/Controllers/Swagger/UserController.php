@@ -267,6 +267,106 @@ namespace App\Http\Controllers\Swagger;
  *           )
  *       )
  *  )
+ * @OA\Post(
+ *       path="/api/subscribe",
+ *       summary="Subscribe to an author",
+ *       tags={"Users"},
+ *       security={{"bearerAuth":{}}},
+ *       @OA\RequestBody(
+ *           required=true,
+ *           @OA\JsonContent(
+ *               type="object",
+ *               required={"author_id"},
+ *               @OA\Property(property="author_id", type="integer", example=14)
+ *           )
+ *       ),
+ *       @OA\Response(
+ *           response=200,
+ *           description="Subscription successful",
+ *           @OA\JsonContent(
+ *               type="object",
+ *               @OA\Property(property="id", type="integer", example=10),
+ *               @OA\Property(
+ *                   property="author_id",
+ *                   type="object",
+ *                   @OA\Property(property="id", type="integer", example=14),
+ *                   @OA\Property(property="firstname", type="string", example="Bahram"),
+ *                   @OA\Property(property="profile_image", type="string", example="localhost/storage/profile_images/66536e2ccf5072.24948606_23dd31f39f75c3852fd6c1f6a9d915c3662a3f7689970.jpeg")
+ *               ),
+ *               @OA\Property(
+ *                   property="user_id",
+ *                   type="object",
+ *                   @OA\Property(property="id", type="integer", example=14),
+ *                   @OA\Property(property="firstname", type="string", example="Bahram"),
+ *                   @OA\Property(property="profile_image", type="string", example="localhost/storage/profile_images/66536e2ccf5072.24948606_23dd31f39f75c3852fd6c1f6a9d915c3662a3f7689970.jpeg")
+ *               ),
+ *               @OA\Property(property="subscribers_count", type="integer", example=2)
+ *           )
+ *       ),
+ *       @OA\Response(
+ *           response=400,
+ *           description="Bad Request",
+ *           @OA\JsonContent(
+ *               @OA\Property(property="error", type="string", example="You have already subscribed to this author!")
+ *           )
+ *       ),
+ *       @OA\Response(
+ *           response=401,
+ *           description="Unauthorized",
+ *           @OA\JsonContent(
+ *               @OA\Property(property="message", type="string", example="Unauthorized")
+ *           )
+ *       ),
+ *       @OA\Response(
+ *           response=500,
+ *           description="Internal Server Error",
+ *           @OA\JsonContent(
+ *               @OA\Property(property="message", type="string", example="An error occurred")
+ *           )
+ *       )
+ *  )
+ * @OA\Post(
+ *        path="/api/unsubscribe",
+ *        summary="Unsubscribe from an author",
+ *        tags={"Users"},
+ *        security={{"bearerAuth":{}}},
+ *        @OA\RequestBody(
+ *            required=true,
+ *            @OA\JsonContent(
+ *                type="object",
+ *                required={"author_id"},
+ *                @OA\Property(property="author_id", type="integer", example=14)
+ *            )
+ *        ),
+ *        @OA\Response(
+ *            response=200,
+ *            description="Successfully unsubscribed",
+ *            @OA\JsonContent(
+ *                @OA\Property(property="success", type="string", example="You successfully unsubscribed from the author!")
+ *            )
+ *        ),
+ *        @OA\Response(
+ *            response=400,
+ *            description="Bad Request",
+ *            @OA\JsonContent(
+ *                @OA\Property(property="error", type="string", example="Failed to unsubscribe from the author!")
+ *            )
+ *        ),
+ *        @OA\Response(
+ *            response=401,
+ *            description="Unauthorized",
+ *            @OA\JsonContent(
+ *                @OA\Property(property="message", type="string", example="Unauthorized")
+ *            )
+ *        ),
+ *        @OA\Response(
+ *            response=500,
+ *            description="Internal Server Error",
+ *            @OA\JsonContent(
+ *                @OA\Property(property="message", type="string", example="An error occurred")
+ *            )
+ *        )
+ *   )
  */
 class UserController
 {
