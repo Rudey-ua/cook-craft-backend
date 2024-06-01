@@ -27,7 +27,7 @@ class RecipeRequest extends FormRequest
             'cooking_time' => 'required|integer|min:1',
             'difficulty_level' => 'required|in:easy,medium,hard',
             'portions' => 'required|integer|min:1',
-            'cover_photo' => 'required|file|max:12064',
+            'cover_photo' => 'required|file',
             'ingredients' => 'required|array|min:1',
             'ingredients.*.title' => 'required|string|max:255',
             'ingredients.*.measure' => 'required|string|max:100',
@@ -35,7 +35,7 @@ class RecipeRequest extends FormRequest
             'steps' => 'required|array|min:1',
             'steps.*.description' => 'required|string|max:1000',
             'steps.*.photos' => 'array|nullable',
-            'steps.*.photos.*' => 'file|mimes:jpg,jpeg,png|max:12064',
+            'steps.*.photos.*' => 'file|mimes:jpg,jpeg,png',
             'tags.*' => 'nullable|exists:tags,id'
         ];
     }
