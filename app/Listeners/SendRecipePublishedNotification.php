@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Events\RecipePublished;
 use App\Models\Subscriber;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\RecipePublished as RecipePublishedEmail;
 
 class SendRecipePublishedNotification
 {
@@ -24,10 +25,7 @@ class SendRecipePublishedNotification
         $subscribers = Subscriber::where('author_id', $event->recipe->user_id)->get();
 
         foreach ($subscribers as $subscriber) {
-            Mail::raw("A new recipe titled '{$event->recipe->title}' has been published by {$event->recipe->user->name}. Check it out!", function ($message) use ($subscriber) {
-                $message->to($subscriber->user->email)
-                    ->subject('New Recipe Published');
-            });
+            Mail::to($subscriber->user->email)->send(new RecipePublishedEmail($event->recipe));
         }
     }
 }
