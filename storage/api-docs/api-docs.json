@@ -3164,6 +3164,196 @@
                     }
                 ]
             }
+        },
+        "/api/author-profile/{id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Retrieve an author's profile",
+                "operationId": "3030ede781f829087f99fa459ae50da7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the author",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Author profile retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 14
+                                        },
+                                        "firstname": {
+                                            "type": "string",
+                                            "example": "Bahram"
+                                        },
+                                        "lastname": {
+                                            "type": "string",
+                                            "example": "Nikenen"
+                                        },
+                                        "profile_image": {
+                                            "type": "string",
+                                            "example": "localhost/storage/profile_images/66536e2ccf5072.24948606_23dd31f39f75c3852fd6c1f6a9d915c3662a3f7689970.jpeg"
+                                        },
+                                        "userDetails": {
+                                            "properties": {
+                                                "birth_date": {
+                                                    "type": "string",
+                                                    "example": "1996-05-04"
+                                                },
+                                                "gender": {
+                                                    "type": "string",
+                                                    "example": "male"
+                                                },
+                                                "language": {
+                                                    "type": "string",
+                                                    "example": "null"
+                                                },
+                                                "time_zone": {
+                                                    "type": "string",
+                                                    "example": "null"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "role": {
+                                            "type": "string",
+                                            "example": "member"
+                                        },
+                                        "recipes": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 46
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "Chimichurri Sauce"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "This famous Argentinian chimichurri sauce is perfect for any grilled chicken, meat, or fish. My catering customers love it on garlic crostini with grilled flank steak slices."
+                                                    },
+                                                    "cooking_time": {
+                                                        "type": "integer",
+                                                        "example": 120
+                                                    },
+                                                    "difficulty_level": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "easy",
+                                                            "medium",
+                                                            "hard"
+                                                        ],
+                                                        "example": "medium"
+                                                    },
+                                                    "portions": {
+                                                        "type": "integer",
+                                                        "example": 4
+                                                    },
+                                                    "is_approved": {
+                                                        "type": "boolean",
+                                                        "example": 0
+                                                    },
+                                                    "is_published": {
+                                                        "type": "boolean",
+                                                        "example": 0
+                                                    },
+                                                    "cover_photo": {
+                                                        "type": "string",
+                                                        "example": "localhost/storage/recipe_cover_photos/665b1e9e2a8e59.11008595_vegetarian-recipes-1.jpg"
+                                                    },
+                                                    "average_rating": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 4
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "subscribers_count": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "subscriptions_count": {
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Author not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Author not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "An error occurred"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {

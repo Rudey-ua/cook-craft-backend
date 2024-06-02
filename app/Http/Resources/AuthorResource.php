@@ -23,7 +23,7 @@ class AuthorResource extends JsonResource
             'profile_image' => $this->getProfileImageUrl($this->profile_image),
             'userDetails' => new UserDetailsResource($this->userDetails),
             'role' =>  $this->roles()->first()->name,
-            'recipes' => RecipeResource::collection($this->recipes),
+            'recipes' => ShortRecipeResource::collection($this->recipes),
             'subscribers_count' => $this->subscribersCount(),
             'subscriptions_count' => $this->subscriptionsCount($this->id)
         ];

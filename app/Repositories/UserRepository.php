@@ -91,7 +91,7 @@ class UserRepository
 
     public function getUserById(int $id): ?User
     {
-        return $this->userModel->with(['userDetails'])->find($id);
+        return $this->userModel->with(['userDetails'])->findOrFail($id);
     }
 
     public function getUserByEmail(string $email): ?User

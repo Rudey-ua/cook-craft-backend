@@ -367,6 +367,79 @@ namespace App\Http\Controllers\Swagger;
  *            )
  *        )
  *   )
+ * @OA\Get(
+ *       path="/api/author-profile/{id}",
+ *       summary="Retrieve an author's profile",
+ *       tags={"Users"},
+ *       security={{"bearerAuth":{}}},
+ *       @OA\Parameter(
+ *           name="id",
+ *           in="path",
+ *           required=true,
+ *           description="The id of the author",
+ *           @OA\Schema(
+ *               type="integer"
+ *           )
+ *       ),
+ *       @OA\Response(
+ *           response=200,
+ *           description="Author profile retrieved successfully",
+ *           @OA\JsonContent(
+ *               type="object",
+ *               @OA\Property(property="id", type="integer", example=14),
+ *               @OA\Property(property="firstname", type="string", example="Bahram"),
+ *               @OA\Property(property="lastname", type="string", example="Nikenen"),
+ *               @OA\Property(property="profile_image", type="string", example="localhost/storage/profile_images/66536e2ccf5072.24948606_23dd31f39f75c3852fd6c1f6a9d915c3662a3f7689970.jpeg"),
+ *               @OA\Property(
+ *                   property="userDetails", type="object",
+ *                   @OA\Property(property="birth_date", type="string", example="1996-05-04"),
+ *                   @OA\Property(property="gender", type="string", example="male"),
+ *                   @OA\Property(property="language", type="string", example="null"),
+ *                   @OA\Property(property="time_zone", type="string", example="null")
+ *               ),
+ *               @OA\Property(property="role", type="string", example="member"),
+ *               @OA\Property(
+ *                   property="recipes", type="array",
+ *                   @OA\Items(
+ *                       type="object",
+ *                       @OA\Property(property="id", type="integer", example=46),
+ *                       @OA\Property(property="title", type="string", example="Chimichurri Sauce"),
+ *                       @OA\Property(property="description", type="string", example="This famous Argentinian chimichurri sauce is perfect for any grilled chicken, meat, or fish. My catering customers love it on garlic crostini with grilled flank steak slices."),
+ *                       @OA\Property(property="cooking_time", type="integer", example=120),
+ *                       @OA\Property(property="difficulty_level", type="string", enum={"easy", "medium", "hard"}, example="medium"),
+ *                       @OA\Property(property="portions", type="integer", example=4),
+ *                       @OA\Property(property="is_approved", type="boolean", example=0),
+ *                       @OA\Property(property="is_published", type="boolean", example=0),
+ *                       @OA\Property(property="cover_photo", type="string", example="localhost/storage/recipe_cover_photos/665b1e9e2a8e59.11008595_vegetarian-recipes-1.jpg"),
+ *                       @OA\Property(property="average_rating", type="float", example=4)
+ *                   )
+ *               ),
+ *               @OA\Property(property="subscribers_count", type="integer", example=1),
+ *               @OA\Property(property="subscriptions_count", type="integer", example=1)
+ *           )
+ *       ),
+ *       @OA\Response(
+ *           response=401,
+ *           description="Unauthorized",
+ *           @OA\JsonContent(
+ *               @OA\Property(property="message", type="string", example="Unauthorized")
+ *           )
+ *       ),
+ *       @OA\Response(
+ *           response=404,
+ *           description="Author not found",
+ *           @OA\JsonContent(
+ *               @OA\Property(property="message", type="string", example="Author not found")
+ *           )
+ *       ),
+ *       @OA\Response(
+ *           response=500,
+ *           description="Internal Server Error",
+ *           @OA\JsonContent(
+ *               @OA\Property(property="message", type="string", example="An error occurred")
+ *           )
+ *       )
+ *  )
  */
 class UserController
 {
