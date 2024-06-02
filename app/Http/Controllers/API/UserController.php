@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Resources\AuthorResource;
 use App\Http\Resources\RecipeResource;
 use App\Http\Resources\UserResource;
 use App\Repositories\SubscriptionRepository;
@@ -44,5 +45,12 @@ class UserController extends Controller
     public function getUserRecipes() : JsonResource
     {
         return RecipeResource::collection(Auth::user()->recipes);
+    }
+
+    public function getAuthorProfile(int $id)
+    {
+        $author = $this->userRepository->getUserById($id);
+
+        return new AuthorResource($author);
     }
 }
