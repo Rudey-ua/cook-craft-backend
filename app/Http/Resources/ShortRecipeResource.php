@@ -27,6 +27,7 @@ class ShortRecipeResource extends JsonResource
             'is_approved' => $this->is_approved,
             'is_published' => $this->is_published,
             'cover_photo' => $this->getRecipeCoverPhoto($this->cover_photo),
+            'average_rating' => $this->countAverageRatingForRecipe(),
         ];
     }
 }
