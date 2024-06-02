@@ -6,6 +6,7 @@ use App\Events\RecipePublished;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RecipeRequest;
 use App\Http\Resources\RecipeResource;
+use App\Http\Resources\ShortRecipeResource;
 use App\Models\Recipe;
 use App\Repositories\RecipeRepository;
 use App\Services\RecipeService;
@@ -20,7 +21,7 @@ class RecipeController extends Controller
 
     public function index()
     {
-        return RecipeResource::collection(Recipe::all());
+        return ShortRecipeResource::collection(Recipe::all());
     }
 
     public function show(int $id)
