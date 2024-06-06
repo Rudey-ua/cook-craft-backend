@@ -70,11 +70,6 @@ class User extends Authenticatable
         return $this->hasMany(Subscriber::class, 'author_id');
     }
 
-    public function subscriptionsCount(int $id): int
-    {
-        return $this->hasMany(Subscriber::class, 'user_id')->count();
-    }
-
     public function subscriptions() : HasMany
     {
         return $this->hasMany(Subscriber::class, 'user_id', 'id');
