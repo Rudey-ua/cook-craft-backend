@@ -440,6 +440,40 @@ namespace App\Http\Controllers\Swagger;
  *           )
  *       )
  *  )
+ * @OA\Get(
+ *       path="/api/users/subscriptions",
+ *       summary="Retrieve user subscriptions",
+ *       tags={"Users"},
+ *       security={{"bearerAuth":{}}},
+ *       @OA\Response(
+ *           response=200,
+ *           description="Subscriptions retrieved successfully",
+ *           @OA\JsonContent(
+ *               type="array",
+ *               @OA\Items(
+ *                   type="object",
+ *                   @OA\Property(property="id", type="integer", example=14),
+ *                   @OA\Property(property="firstname", type="string", example="Bahram"),
+ *                   @OA\Property(property="profile_image", type="string", example="66536e2ccf5072.24948606_23dd31f39f75c3852fd6c1f6a9d915c3662a3f7689970.jpeg"),
+ *                   @OA\Property(property="subscribers_count", type="integer", example=2)
+ *               )
+ *           )
+ *       ),
+ *       @OA\Response(
+ *           response=401,
+ *           description="Unauthorized",
+ *           @OA\JsonContent(
+ *               @OA\Property(property="message", type="string", example="Unauthorized")
+ *           )
+ *       ),
+ *       @OA\Response(
+ *           response=500,
+ *           description="Internal Server Error",
+ *           @OA\JsonContent(
+ *               @OA\Property(property="message", type="string", example="An error occurred")
+ *           )
+ *       )
+ *  )
  */
 class UserController
 {

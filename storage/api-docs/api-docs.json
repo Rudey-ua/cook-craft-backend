@@ -3354,6 +3354,85 @@
                     }
                 ]
             }
+        },
+        "/api/users/subscriptions": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Retrieve user subscriptions",
+                "operationId": "3a6b2cde9abbaca1e5e4d2c798211b03",
+                "responses": {
+                    "200": {
+                        "description": "Subscriptions retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 14
+                                            },
+                                            "firstname": {
+                                                "type": "string",
+                                                "example": "Bahram"
+                                            },
+                                            "profile_image": {
+                                                "type": "string",
+                                                "example": "66536e2ccf5072.24948606_23dd31f39f75c3852fd6c1f6a9d915c3662a3f7689970.jpeg"
+                                            },
+                                            "subscribers_count": {
+                                                "type": "integer",
+                                                "example": 2
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "An error occurred"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
