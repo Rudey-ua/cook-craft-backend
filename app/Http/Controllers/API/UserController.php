@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Resources\AuthorResource;
+use App\Http\Resources\FollowersResource;
 use App\Http\Resources\RecipeResource;
 use App\Http\Resources\UserResource;
 use App\Repositories\SubscriptionRepository;
@@ -52,5 +53,10 @@ class UserController extends Controller
         $author = $this->userRepository->getUserById($id);
 
         return new AuthorResource($author);
+    }
+
+    public function getUserSubscriptions()
+    {
+        return FollowersResource::collection(Auth::user()->subscriptions);
     }
 }
