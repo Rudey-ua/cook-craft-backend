@@ -22,7 +22,7 @@ class FollowersResource extends JsonResource
         return [
             'id' => $user->id,
             'firstname' => $user->firstname,
-            'profile_image' => $this->getProfileImageUrl($this->profile_image),
+            'profile_image' => $this->getProfileImageUrl($user->profile_image),
             'subscribers_count' => $user->subscribers_count
         ];
     }
