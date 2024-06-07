@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use App\Traits\FIleTrait;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class ShortUserResource extends JsonResource
 {
@@ -21,5 +22,13 @@ class ShortUserResource extends JsonResource
             'firstname' => $this->firstname,
             'profile_image' => $this->getProfileImageUrl($this->profile_image),
         ];
+    }
+
+    public function getProfileImageUrl($filename): ?string
+    {
+        if (!$filename) {
+            return null;
+        }
+        return Storage::disk('public')->url('profile_images/' . $filename);
     }
 }
