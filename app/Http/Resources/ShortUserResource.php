@@ -23,12 +23,4 @@ class ShortUserResource extends JsonResource
             'profile_image' => $this->getProfileImageUrl($this->profile_image),
         ];
     }
-
-    public function getProfileImageUrl($filename): ?string
-    {
-        if (!$filename) {
-            return null;
-        }
-        return Storage::disk('public')->url('profile_images/' . $filename);
-    }
 }

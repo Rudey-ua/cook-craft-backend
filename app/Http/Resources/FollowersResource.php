@@ -6,6 +6,7 @@ use App\Models\Subscriber;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class FollowersResource extends JsonResource
 {
@@ -21,8 +22,15 @@ class FollowersResource extends JsonResource
         return [
             'id' => $user->id,
             'firstname' => $user->firstname,
-            'profile_image' => $user->profile_image,
+            'profile_image' => $this->getProfileImageUrl($this->profile_image),
             'subscribers_count' => $user->subscribers_count
         ];
+    }
+    public function getProfileImageUrl($filename): ?string
+    {
+        if (!$filename) {
+            return null;
+        }
+        return Storage::disk('public')->url('profile_images/' . $filename);
     }
 }
