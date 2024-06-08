@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Favorite;
 use App\Models\User;
 use App\Traits\FIleTrait;
 use Illuminate\Http\Request;
@@ -31,7 +32,8 @@ class RecipeResource extends JsonResource
             'cover_photo' => $this->getRecipeCoverPhoto($this->cover_photo),
             'ingredients' => IngredientResource::collection($this->ingredients),
             'steps' => StepResource::collection($this->steps),
-            'tags' => TagResource::collection($this->tags)
+            'tags' => TagResource::collection($this->tags),
+            'is_favorite' => Favorite::where('user_id', $this->user_id)->where('recipe_id', $this->id)->exists()
         ];
     }
 }
