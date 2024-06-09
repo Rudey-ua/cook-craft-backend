@@ -42,8 +42,20 @@ class RecipeController extends Controller
                 return $query->whereHas('tags', function ($query) use ($tags) {
                     $query->whereIn('tag_id', $tags);
                 });
-            })
-            ->get();
+            })->get();
+
+        switch ($request->sort) {
+            case 'rating_asc':
+                $recipes = $recipes->sortBy(function ($recipe) {
+                    return $recipe->countAverageRatingForRecipe();
+                });
+                break;
+            case 'rating_desc':
+                $recipes = $recipes->sortByDesc(function ($recipe) {
+                    return $recipe->countAverageRatingForRecipe();
+                });
+                break;
+        }
 
         return ShortRecipeResource::collection($recipes);
     }
