@@ -30,7 +30,10 @@ class RecipeController extends Controller
     public function index()
     {
         $members = User::role(config('permission.user_roles.member'))->pluck('id');
-        $recipes = Recipe::whereIn('user_id', $members)->get();
+        $recipes = Recipe::whereIn('user_id', $members)
+            ->where('is_approved', true)
+            ->where('is_published', true)
+            ->get();
 
         return ShortRecipeResource::collection($recipes);
     }
