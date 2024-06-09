@@ -24,8 +24,11 @@ class RecipeRepository
             $recipe = $this->createRecipe($recipeData);
             $this->createIngredients($recipe->id, $recipeData->ingredients);
             $this->createSteps($recipe->id, $recipeData->steps);
-            !empty($recipeData->tags) ? $this->syncTags($recipe, $recipeData->tags) : null;
+            //!empty($recipeData->tags) ? $this->syncTags($recipe, $recipeData->tags) : null;
 
+            if (!empty($recipeData->tags)) {
+                $this->updateTags($recipe, $recipeData->tags);
+            }
             return $recipe;
         });
     }
@@ -63,9 +66,18 @@ class RecipeRepository
         }
     }
 
-    protected function syncTags(Recipe $recipe, array $tagIds): void
+    /*protected function syncTags(Recipe $recipe, array $tagIds): void
     {
         $recipe->tags()->sync($tagIds);
+    }*/
+
+    protected function updateTags(Recipe $recipe, array $tagIds): void
+    {
+        $recipe->tags()->detach();
+
+        foreach ($tagIds as $tagId) {
+            $recipe->tags()->attach($tagId);
+        }
     }
 
     public function updateRecipeWithDetails(int $recipeId, RecipeData $recipeData): Recipe
