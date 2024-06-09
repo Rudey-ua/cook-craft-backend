@@ -25,6 +25,7 @@ class RecipeFilterRequest extends FormRequest
             'title' => 'nullable|string|max:255',
             'tags' => 'nullable|array',
             'tags.*' => 'integer|exists:tags,id',
+            'sort' => 'nullable|string|in:rating_asc,rating_desc'
         ];
     }
 }

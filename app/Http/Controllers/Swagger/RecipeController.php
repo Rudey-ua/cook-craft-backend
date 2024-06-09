@@ -379,6 +379,16 @@ namespace App\Http\Controllers\Swagger;
  *           ),
  *           description="Filter recipes by tag IDs"
  *       ),
+ *       @OA\Parameter(
+ *           name="sort",
+ *           in="query",
+ *           required=false,
+ *           @OA\Schema(
+ *               type="string",
+ *               enum={"rating_asc", "rating_desc"}
+ *           ),
+ *           description="Sort recipes by average rating in ascending or descending order"
+ *       ),
  *       @OA\Response(
  *           response=200,
  *           description="List of recipes retrieved successfully",
