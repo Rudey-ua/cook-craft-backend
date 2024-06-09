@@ -45,9 +45,11 @@ class CommentRepository
         return $comment;
     }
 
-    public function isMoreThanOneCommentFromUser(int $userId): bool
+    public function isMoreThanOneCommentFromUser(int $userId, int $recipeId): bool
     {
-        $count = Comment::where('user_id', $userId)->count();
+        $count = Comment::where('user_id', $userId)
+            ->where('recipe_id', $recipeId)
+            ->count();
         return $count > 0;
     }
 }
