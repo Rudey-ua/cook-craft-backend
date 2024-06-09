@@ -49,6 +49,7 @@ class RecipeService
             difficulty_level: $validatedData['difficulty_level'],
             portions: $validatedData['portions'],
             coverPhoto: $validatedData['cover_photo'],
+            isPublished: $validatedData['is_published'],
             ingredients: array_map(fn($ingredient) => new IngredientData(
                 $ingredient['title'],
                 $ingredient['measure'],

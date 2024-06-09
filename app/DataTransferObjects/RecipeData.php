@@ -14,6 +14,7 @@ class RecipeData
         public readonly string $difficulty_level,
         public readonly int $portions,
         public readonly UploadedFile $coverPhoto,
+        public readonly bool $isPublished,
         public readonly array $ingredients,
         public readonly array $steps,
         public readonly ?array $tags
@@ -30,6 +31,7 @@ class RecipeData
             'difficulty_level' => $this->difficulty_level,
             'portions' => $this->portions,
             'cover_photo' => $this->coverPhoto,
+            'is_published' => $this->isPublished
         ];
     }
 }
