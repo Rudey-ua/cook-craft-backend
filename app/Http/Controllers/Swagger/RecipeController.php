@@ -354,10 +354,31 @@ namespace App\Http\Controllers\Swagger;
  *       ),
  *       security={{"bearerAuth":{}}}
  *  )
+ *
  * @OA\Get(
  *       path="/api/recipes",
  *       summary="Retrieve all recipes",
  *       tags={"Recipes"},
+ *       security={{"bearerAuth":{}}},
+ *       @OA\Parameter(
+ *           name="title",
+ *           in="query",
+ *           required=false,
+ *           @OA\Schema(
+ *               type="string"
+ *           ),
+ *           description="Filter recipes by title"
+ *       ),
+ *       @OA\Parameter(
+ *           name="tags[]",
+ *           in="query",
+ *           required=false,
+ *           @OA\Schema(
+ *               type="array",
+ *               @OA\Items(type="integer")
+ *           ),
+ *           description="Filter recipes by tag IDs"
+ *       ),
  *       @OA\Response(
  *           response=200,
  *           description="List of recipes retrieved successfully",
@@ -410,9 +431,9 @@ namespace App\Http\Controllers\Swagger;
  *               type="object",
  *               @OA\Property(property="error", type="string", example="Invalid request parameters")
  *           )
- *       ),
- *       security={{"bearerAuth":{}}}
+ *       )
  *  )
+ *
  * @OA\Get(
  *       path="/api/recipes/{id}",
  *       summary="Retrieve a specific recipe",
