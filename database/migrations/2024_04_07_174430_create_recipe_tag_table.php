@@ -9,18 +9,18 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('recipe_tag', function (Blueprint $table) {
-            $table->unsignedBigInteger('recipe_id');
-            $table->unsignedBigInteger('tag_id');
+        public function up(): void
+        {
+            Schema::create('recipe_tag', function (Blueprint $table) {
+                $table->unsignedBigInteger('recipe_id');
+                $table->unsignedBigInteger('tag_id');
 
-            $table->foreign('recipe_id')->references('id')->on('recipes')->onDelete('cascade');
-            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
+                $table->foreign('recipe_id')->references('id')->on('recipes')->onDelete('cascade');
+                $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
 
-            $table->primary(['recipe_id', 'tag_id']);
-        });
-    }
+                $table->primary(['recipe_id', 'tag_id']);
+            });
+        }
 
     /**
      * Reverse the migrations.

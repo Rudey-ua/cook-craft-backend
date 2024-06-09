@@ -831,6 +831,29 @@
                 ],
                 "summary": "Retrieve all recipes",
                 "operationId": "99b2921505aaa0b05aafd140ed9f5f09",
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "Filter recipes by title",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "tags[]",
+                        "in": "query",
+                        "description": "Filter recipes by tag IDs",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "List of recipes retrieved successfully",

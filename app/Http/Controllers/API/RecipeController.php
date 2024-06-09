@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Events\RecipePublished;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RecipeFilterRequest;
 use App\Http\Requests\RecipeRequest;
 use App\Http\Resources\PremiumRecipeResource;
 use App\Http\Resources\RecipeResource;
@@ -27,12 +28,21 @@ class RecipeController extends Controller
         //
     }
 
-    public function index()
+    public function index(RecipeFilterRequest $request)
     {
         $members = User::role(config('permission.user_roles.member'))->pluck('id');
+
         $recipes = Recipe::whereIn('user_id', $members)
-            ->where('is_approved', true)
             ->where('is_published', true)
+
+            ->when($request->title, function ($query, $title) {
+                return $query->where('title', 'like', '%' . $title . '%');
+            })
+            ->when($request->tags, function ($query, $tags) {
+                return $query->whereHas('tags', function ($query) use ($tags) {
+                    $query->whereIn('tag_id', $tags);
+                });
+            })
             ->get();
 
         return ShortRecipeResource::collection($recipes);
