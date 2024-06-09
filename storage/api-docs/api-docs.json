@@ -1889,6 +1889,132 @@
                 ]
             }
         },
+        "/api/premium-recipes": {
+            "get": {
+                "tags": [
+                    "Recipes"
+                ],
+                "summary": "Retrieve premium recipes",
+                "operationId": "e68b06679a129b89536e0c5460030724",
+                "responses": {
+                    "200": {
+                        "description": "Premium recipes retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 62
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "example": "Борщ"
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "example": "Перша задокументована згадка про український борщ датується 1584 роком у Києві. У своїх щоденниках про страву згадав німецький торговельний агент Мартін Ґруневеґ."
+                                            },
+                                            "cooking_time": {
+                                                "type": "integer",
+                                                "example": 120
+                                            },
+                                            "difficulty_level": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "easy",
+                                                    "medium",
+                                                    "hard"
+                                                ],
+                                                "example": "medium"
+                                            },
+                                            "portions": {
+                                                "type": "integer",
+                                                "example": 4
+                                            },
+                                            "is_approved": {
+                                                "type": "boolean",
+                                                "example": false
+                                            },
+                                            "is_published": {
+                                                "type": "boolean",
+                                                "example": false
+                                            },
+                                            "cover_photo": {
+                                                "type": "string",
+                                                "example": "http://localhost/storage/recipe_cover_photos/6665ad5884baf1.32852380_Me.jpeg"
+                                            },
+                                            "average_rating": {
+                                                "type": "number",
+                                                "format": "float",
+                                                "example": null
+                                            },
+                                            "chief": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 12
+                                                    },
+                                                    "firstname": {
+                                                        "type": "string",
+                                                        "example": "Max"
+                                                    },
+                                                    "profile_image": {
+                                                        "type": "string",
+                                                        "example": "http://localhost/storage/profile_images/6651dc60402c96.90168540_23dd31f39f75c3852fd6c1f6a9d915c3662a3f7689970.jpeg"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "An error occurred"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/subscription": {
             "post": {
                 "tags": [

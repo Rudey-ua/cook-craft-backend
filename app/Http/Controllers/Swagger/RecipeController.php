@@ -478,6 +478,52 @@ namespace App\Http\Controllers\Swagger;
  *       ),
  *       security={{"bearerAuth":{}}}
  *  )
+ * @OA\Get(
+ *       path="/api/premium-recipes",
+ *       summary="Retrieve premium recipes",
+ *       tags={"Recipes"},
+ *       security={{"bearerAuth":{}}},
+ *       @OA\Response(
+ *           response=200,
+ *           description="Premium recipes retrieved successfully",
+ *           @OA\JsonContent(
+ *               type="array",
+ *               @OA\Items(
+ *                   type="object",
+ *                   @OA\Property(property="id", type="integer", example=62),
+ *                   @OA\Property(property="title", type="string", example="Борщ"),
+ *                   @OA\Property(property="description", type="string", example="Перша задокументована згадка про український борщ датується 1584 роком у Києві. У своїх щоденниках про страву згадав німецький торговельний агент Мартін Ґруневеґ."),
+ *                   @OA\Property(property="cooking_time", type="integer", example=120),
+ *                   @OA\Property(property="difficulty_level", type="string", enum={"easy", "medium", "hard"}, example="medium"),
+ *                   @OA\Property(property="portions", type="integer", example=4),
+ *                   @OA\Property(property="is_approved", type="boolean", example=false),
+ *                   @OA\Property(property="is_published", type="boolean", example=false),
+ *                   @OA\Property(property="cover_photo", type="string", example="http://localhost/storage/recipe_cover_photos/6665ad5884baf1.32852380_Me.jpeg"),
+ *                   @OA\Property(property="average_rating", type="number", format="float", example=null),
+ *                   @OA\Property(
+ *                       property="chief", type="object",
+ *                       @OA\Property(property="id", type="integer", example=12),
+ *                       @OA\Property(property="firstname", type="string", example="Max"),
+ *                       @OA\Property(property="profile_image", type="string", example="http://localhost/storage/profile_images/6651dc60402c96.90168540_23dd31f39f75c3852fd6c1f6a9d915c3662a3f7689970.jpeg")
+ *                   )
+ *               )
+ *           )
+ *       ),
+ *       @OA\Response(
+ *           response=401,
+ *           description="Unauthorized",
+ *           @OA\JsonContent(
+ *               @OA\Property(property="message", type="string", example="Unauthorized")
+ *           )
+ *       ),
+ *       @OA\Response(
+ *           response=500,
+ *           description="Internal Server Error",
+ *           @OA\JsonContent(
+ *               @OA\Property(property="message", type="string", example="An error occurred")
+ *           )
+ *       )
+ *  )
  */
 class RecipeController
 {
