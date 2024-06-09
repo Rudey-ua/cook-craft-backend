@@ -86,8 +86,11 @@ class RecipeRepository
             $recipe = $this->updateRecipe($recipeId, $recipeData);
             $this->updateIngredients($recipeId, $recipeData->ingredients);
             $this->updateSteps($recipeId, $recipeData->steps);
-            !empty($recipeData->tags) ? $this->syncTags($recipe, $recipeData->tags) : null;
+            //!empty($recipeData->tags) ? $this->syncTags($recipe, $recipeData->tags) : null;
 
+            if (!empty($recipeData->tags)) {
+                $this->updateTags($recipe, $recipeData->tags);
+            }
             return $recipe;
         });
     }
