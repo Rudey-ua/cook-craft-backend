@@ -29,7 +29,10 @@ class RecipeController extends Controller
 
     public function index()
     {
-        return ShortRecipeResource::collection(Recipe::all());
+        $members = User::role(config('permission.user_roles.member'))->pluck('id');
+        $recipes = Recipe::whereIn('user_id', $members)->get();
+
+        return ShortRecipeResource::collection($recipes);
     }
 
     public function show(int $id)
