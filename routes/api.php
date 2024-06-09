@@ -38,6 +38,7 @@ Route::group(['middleware' => ['auth:sanctum']],  function() {
         Route::post('/recipes', 'store');
         Route::post('/recipes/{id}/update', 'update');
         Route::delete('/recipes/{id}', 'destroy');
+        Route::get('/premium-recipes', 'getPremiumRecipes');
     });
 
     Route::controller(FavouriteController::class)->group(function () {
