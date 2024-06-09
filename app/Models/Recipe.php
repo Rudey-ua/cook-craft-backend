@@ -40,6 +40,7 @@ class Recipe extends Model
 
     public function countAverageRatingForRecipe(): float|int|null
     {
-        return $this->comments->avg('rate');
+        $averageRating = $this->comments->avg('rate');
+        return $averageRating !== null ? round($averageRating, 1) : null;
     }
 }
