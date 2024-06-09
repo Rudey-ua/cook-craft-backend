@@ -47,6 +47,7 @@ class RecipeController extends Controller
             $recipe = $this->recipeService->createRecipe($validated);
             event(new RecipePublished($recipe));
         } catch (\Exception $e) {
+            \Log::error("Failed to update recipe, Error: " . $e->getMessage());
             return $e->getMessage();
         }
         return new RecipeResource($recipe);
@@ -59,6 +60,7 @@ class RecipeController extends Controller
         try {
             $recipe = $this->recipeService->updateRecipe($id, $validated);
         } catch (\Exception $e) {
+            \Log::error("Failed to update recipe, Error: " . $e->getMessage());
             return $this->respondError($e->getMessage());
         }
         return new RecipeResource($recipe);
