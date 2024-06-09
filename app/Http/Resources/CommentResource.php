@@ -18,7 +18,7 @@ class CommentResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'rate' => $this->rate,
+            'rate' => round($this->rate, 1),
             'recipe_id' => $this->recipe_id,
             'user_id' => new ShortUserResource(User::find($this->user_id)),
             'created_at' => $this->created_at->toDateTimeString(),
