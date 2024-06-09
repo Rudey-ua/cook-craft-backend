@@ -39,10 +39,12 @@ class AuthorizationController extends Controller
 
             $user->assignRole(config('permission.user_roles.member'));
             $token = $user->createToken('auth_token')->plainTextToken;
+            $subscription = $user->subscription;
 
             return $this->respondWithSuccess([
                 'id' => $user->id,
-                'token' => $token
+                'token' => $token,
+                'is_active_subscription' => $subscription && (bool)$subscription->is_active,
             ]);
         });
     }
@@ -56,10 +58,12 @@ class AuthorizationController extends Controller
             return $this->respondUnAuthenticated(__("The provided credentials are incorrect."));
         }
         $token = $user->createToken('auth_token')->plainTextToken;
+        $subscription = $user->subscription;
 
         return response()->json([
             'id' => $user->id,
-            'token' => $token
+            'token' => $token,
+            'is_active_subscription' => $subscription && (bool)$subscription->is_active,
         ]);
     }
 
