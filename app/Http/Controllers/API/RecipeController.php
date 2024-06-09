@@ -5,18 +5,26 @@ namespace App\Http\Controllers\API;
 use App\Events\RecipePublished;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RecipeRequest;
+use App\Http\Resources\PremiumRecipeResource;
 use App\Http\Resources\RecipeResource;
 use App\Http\Resources\ShortRecipeResource;
 use App\Models\Recipe;
+use App\Models\User;
 use App\Repositories\RecipeRepository;
+use App\Repositories\SubscriptionRepository;
 use App\Services\RecipeService;
 use F9Web\ApiResponseHelpers;
+use Illuminate\Support\Facades\Auth;
 
 class RecipeController extends Controller
 {
     use ApiResponseHelpers;
-    public function __construct(protected RecipeService $recipeService, protected RecipeRepository $recipeRepository)
+    public function __construct(
+        protected RecipeService $recipeService,
+        protected RecipeRepository $recipeRepository,
+        protected SubscriptionRepository $subscriptionRepository)
     {
+        //
     }
 
     public function index()
@@ -60,5 +68,16 @@ class RecipeController extends Controller
     {
         Recipe::findOrFail($id)->delete();
         return $this->respondNoContent();
+    }
+
+    public function getPremiumRecipes()
+    {
+        if (is_null($this->subscriptionRepository->getActiveSubscription(Auth::id()))) {
+            return $this->respondError(__("You don't have an active subscription!"));
+        }
+        $chiefs = User::role(config('permission.user_roles.chief'))->pluck('id');
+        $recipes = Recipe::whereIn('user_id', $chiefs)->get();
+
+        return PremiumRecipeResource::collection($recipes);
     }
 }

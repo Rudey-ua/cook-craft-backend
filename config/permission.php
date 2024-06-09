@@ -186,7 +186,7 @@ return [
 
     'user_roles' => [
         'admin' => 'admin',
-        'chef' => 'chef',
+        'chief' => 'chief',
         'member' => 'member'
     ],
 ];
