@@ -59,7 +59,6 @@ Route::group(['middleware' => ['auth:sanctum']],  function() {
         Route::post('/update', 'updateProfile');
         Route::get('/recipes', 'getUserRecipes');
         Route::get('/subscriptions', 'getUserSubscriptions');
-
     });
     Route::get('/author-profile/{id}', [UserController::class, 'getAuthorProfile']);
 

@@ -32,7 +32,7 @@ class CommentController extends Controller
     {
         $validated = $commentRequest->validated();
 
-        if ($this->commentRepository->isMoreThanOneCommentFromUser(auth()->user()->id)) {
+        if ($this->commentRepository->isMoreThanOneCommentFromUser(auth()->user()->id, $validated['recipe_id'])) {
             return $this->respondError(__("You already commented this recipe!"));
         }
 
