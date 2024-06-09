@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Traits\FIleTrait;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 class RecipeResource extends JsonResource
 {
@@ -33,7 +34,7 @@ class RecipeResource extends JsonResource
             'ingredients' => IngredientResource::collection($this->ingredients),
             'steps' => StepResource::collection($this->steps),
             'tags' => TagResource::collection($this->tags),
-            'is_favorite' => Favorite::where('user_id', $this->user_id)->where('recipe_id', $this->id)->exists()
+            'is_favorite' => Favorite::where('user_id', Auth::id())->where('recipe_id', $this->id)->exists()
         ];
     }
 }
