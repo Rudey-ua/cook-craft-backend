@@ -213,7 +213,7 @@ class PayPalService implements PaymentProviderInterface
                 //TODO: send mail about successful payment
             }
         });
-        return redirect('https://google.com');
+        return redirect()->route('thank-you');
     }
 
     public function renewSubscription(string $paypalSubscriptionId): void
