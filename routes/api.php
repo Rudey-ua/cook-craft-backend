@@ -11,6 +11,7 @@ use App\Http\Controllers\API\SubscriberController;
 use App\Http\Controllers\API\SubscriptionController;
 use App\Http\Controllers\API\TagController;
 use App\Http\Controllers\API\UserController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -74,6 +75,17 @@ Route::group(['middleware' => ['auth:sanctum']],  function() {
         Route::post('/subscribe', 'subscribe');
         Route::post('/unsubscribe', 'unsubscribe');
     });
+});
+
+Route::post('/uploadFile', function(Request $request){
+
+    $file = $request->file('file');
+
+    $filename = str_replace(' ', '_', $file->getClientOriginalName());
+
+    $path = Storage::disk('public')->putFileAs('/', $file, $filename);
+
+    return $path ? $filename : false;
 });
 
 Route::any('/webhooks/payment/{service}', PaymentWebhookController::class);
