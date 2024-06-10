@@ -30,7 +30,7 @@ class RecipePublished extends Mailable
     {
         App::setLocale($this->recipe->user->preferred_locale ?? 'en');
 
-        $subject = $this->recipe->user->firstname . " " . __("published a new recipe!");
+        $subject = $this->recipe->user->firstname . " " . __("опублікував новий рецепт!");
 
         return new Envelope(
             subject: $subject,
