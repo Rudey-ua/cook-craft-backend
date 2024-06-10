@@ -166,7 +166,7 @@ class PayPalService implements PaymentProviderInterface
         ]);
     }
 
-    public function activateSubscription(Request $request): void
+    public function activateSubscription(Request $request)
     {
         $subscriptionId = $request->input('subscription_id') ?? $request->input('resource.id');
         $subscriptionData = $this->getSubscriptionData($subscriptionId);
@@ -213,6 +213,7 @@ class PayPalService implements PaymentProviderInterface
                 //TODO: send mail about successful payment
             }
         });
+        return redirect('https://google.com');
     }
 
     public function renewSubscription(string $paypalSubscriptionId): void
