@@ -52,7 +52,7 @@ class PayPalService implements PaymentProviderInterface
         $response = Http::withToken($this->getAccessToken())
             ->asJson()
             ->post("$this->PAYPAL_BASE_URL/v1/catalogs/products", [
-                'name' => 'Zemfyra Monthly Subscriptions',
+                'name' => 'CookCraft Monthly Subscriptions',
                 'description' => 'Flexible one-month subscription',
                 'type' => 'DIGITAL',
                 'category' => 'SOFTWARE',
@@ -158,6 +158,12 @@ class PayPalService implements PaymentProviderInterface
         if (!$response->successful()) {
             throw new \Exception("Failed to cancel subscription: " . $response->body());
         }
+        $subscription->update([
+            'is_active' => false,
+            'is_canceled' => true,
+            'updated_at' => now(),
+            'cancel_reason' => $cancelReason
+        ]);
     }
 
     public function activateSubscription(Request $request): void
@@ -260,9 +266,8 @@ class PayPalService implements PaymentProviderInterface
 
     public function detectCurrencyCode($paymentMethod): string
     {
-        switch ($paymentMethod) {
-            case config('payments.payment_methods.paypal'):
-                return config('payments.currencies.euro');
+        if ($paymentMethod == config('payments.payment_methods.paypal')) {
+            return config('payments.currencies.euro');
         }
     }
 
@@ -291,9 +296,6 @@ class PayPalService implements PaymentProviderInterface
                     break;
                 case config('payments.paypal.events.payment_completed'):
                     $this->renewSubscription($request->input('resource.billing_agreement_id'));
-                    break;
-                case config('payments.paypal.events.cancelled'):
-                    $this->subscriptionRepository->cancelPayPalSubscription($subscriptionId);
                     break;
             }
         } catch (\Exception $e) {
