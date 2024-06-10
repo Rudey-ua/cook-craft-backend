@@ -106,7 +106,9 @@ class RecipeController extends Controller
             return $this->respondError(__("You don't have an active subscription!"));
         }
         $chiefs = User::role(config('permission.user_roles.chief'))->pluck('id');
-        $recipes = Recipe::whereIn('user_id', $chiefs)->get();
+        $recipes = Recipe::whereIn('user_id', $chiefs)
+            ->where('is_published', true)
+            ->get();
 
         return PremiumRecipeResource::collection($recipes);
     }
