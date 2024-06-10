@@ -28,6 +28,8 @@ class RecipePublished extends Mailable
      */
     public function envelope(): Envelope
     {
+        App::setLocale($this->recipe->user->preferred_locale ?? 'en');
+
         $subject = $this->recipe->user->firstname . " " . __("published a new recipe!");
 
         return new Envelope(
@@ -40,6 +42,8 @@ class RecipePublished extends Mailable
      */
     public function content(): Content
     {
+        App::setLocale($this->recipe->user->preferred_locale ?? 'en');
+
         return new Content(
             view: 'emails.recipe_published',
             with: [
