@@ -53,7 +53,7 @@
 
 <body>
 <div class="thank-you-container">
-    <img src="{{ url('storage/2024-06-02%2018.26.07.jpg') }}" alt="Logo" class="logo">
+    <img src="{{ url('storage/2024-06-10_23.42.24.jpg') }}" alt="Logo" class="logo">
 
     <h1>Welcome to the Club!</h1>
     <p>Your subscription spices up our kitchen and helps us bring more delicious recipes to your table.</p>

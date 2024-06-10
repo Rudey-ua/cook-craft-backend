@@ -77,16 +77,5 @@ Route::group(['middleware' => ['auth:sanctum']],  function() {
     });
 });
 
-Route::post('/uploadFile', function(Request $request){
-
-    $file = $request->file('file');
-
-    $filename = str_replace(' ', '_', $file->getClientOriginalName());
-
-    $path = Storage::disk('public')->putFileAs('/', $file, $filename);
-
-    return $path ? $filename : false;
-});
-
 Route::any('/webhooks/payment/{service}', PaymentWebhookController::class);
 Route::any('/callback/payment/{service}', PaymentCallbackController::class);
