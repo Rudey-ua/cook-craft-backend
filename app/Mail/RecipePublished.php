@@ -9,6 +9,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\App;
 
 class RecipePublished extends Mailable
 {
@@ -18,14 +19,16 @@ class RecipePublished extends Mailable
      * Create a new message instance.
      */
     public function __construct(protected Recipe $recipe)
-    {}
+    {
+        App::setLocale($this->recipe->user->preferred_locale ?? 'en');
+    }
 
     /**
      * Get the message envelope.
      */
     public function envelope(): Envelope
     {
-        $subject = $this->recipe->user->firstname . __(" published a new recipe!");
+        $subject = $this->recipe->user->firstname . " " . __("published a new recipe!");
 
         return new Envelope(
             subject: $subject,
