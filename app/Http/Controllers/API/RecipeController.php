@@ -32,30 +32,8 @@ class RecipeController extends Controller
     {
         $members = User::role(config('permission.user_roles.member'))->pluck('id');
 
-        $recipes = Recipe::whereIn('user_id', $members)
-            ->where('is_published', true)
-
-            ->when($request->title, function ($query, $title) {
-                return $query->where('title', 'like', '%' . $title . '%');
-            })
-            ->when($request->tags, function ($query, $tags) {
-                return $query->whereHas('tags', function ($query) use ($tags) {
-                    $query->whereIn('tag_id', $tags);
-                });
-            })->get();
-
-        switch ($request->sort) {
-            case 'rating_asc':
-                $recipes = $recipes->sortBy(function ($recipe) {
-                    return $recipe->countAverageRatingForRecipe();
-                });
-                break;
-            case 'rating_desc':
-                $recipes = $recipes->sortByDesc(function ($recipe) {
-                    return $recipe->countAverageRatingForRecipe();
-                });
-                break;
-        }
+        $recipes = $this->recipeRepository->getPublishedRecipesFromMembers($members, $request);
+        $recipes = $this->recipeRepository->applySorting($request, $recipes);
 
         return ShortRecipeResource::collection($recipes);
     }
@@ -94,22 +72,22 @@ class RecipeController extends Controller
         return new RecipeResource($recipe);
     }
 
-    public function destroy(int $id)
-    {
-        Recipe::findOrFail($id)->delete();
-        return $this->respondNoContent();
-    }
-
-    public function getPremiumRecipes()
+    public function getPremiumRecipes(RecipeFilterRequest $request)
     {
         if (is_null($this->subscriptionRepository->getActiveSubscription(Auth::id()))) {
             return $this->respondError(__("You don't have an active subscription!"));
         }
         $chiefs = User::role(config('permission.user_roles.chief'))->pluck('id');
-        $recipes = Recipe::whereIn('user_id', $chiefs)
-            ->where('is_published', true)
-            ->get();
+
+        $recipes = $this->recipeRepository->getPublishedRecipesFromMembers($chiefs, $request);
+        $recipes = $this->recipeRepository->applySorting($request, $recipes);
 
         return PremiumRecipeResource::collection($recipes);
+    }
+
+    public function destroy(int $id)
+    {
+        Recipe::findOrFail($id)->delete();
+        return $this->respondNoContent();
     }
 }

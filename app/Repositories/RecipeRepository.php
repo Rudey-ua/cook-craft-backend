@@ -7,6 +7,8 @@ use App\Models\Ingredient;
 use App\Models\Recipe;
 use App\Models\Step;
 use App\Traits\FIleTrait;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class RecipeRepository
@@ -24,7 +26,6 @@ class RecipeRepository
             $recipe = $this->createRecipe($recipeData);
             $this->createIngredients($recipe->id, $recipeData->ingredients);
             $this->createSteps($recipe->id, $recipeData->steps);
-            //!empty($recipeData->tags) ? $this->syncTags($recipe, $recipeData->tags) : null;
 
             if (!empty($recipeData->tags)) {
                 $this->updateTags($recipe, $recipeData->tags);
@@ -66,11 +67,6 @@ class RecipeRepository
         }
     }
 
-    /*protected function syncTags(Recipe $recipe, array $tagIds): void
-    {
-        $recipe->tags()->sync($tagIds);
-    }*/
-
     protected function updateTags(Recipe $recipe, array $tagIds): void
     {
         $recipe->tags()->detach();
@@ -86,7 +82,6 @@ class RecipeRepository
             $recipe = $this->updateRecipe($recipeId, $recipeData);
             $this->updateIngredients($recipeId, $recipeData->ingredients);
             $this->updateSteps($recipeId, $recipeData->steps);
-            //!empty($recipeData->tags) ? $this->syncTags($recipe, $recipeData->tags) : null;
 
             if (!empty($recipeData->tags)) {
                 $this->updateTags($recipe, $recipeData->tags);
@@ -143,5 +138,36 @@ class RecipeRepository
             }
             $this->stepModel->create(array_merge($stepDataArray, ['recipe_id' => $recipeId]));
         }
+    }
+
+    public function getPublishedRecipesFromMembers(Collection $users, Request $request)
+    {
+        return Recipe::whereIn('user_id', $users)
+            ->where('is_published', true)
+
+            ->when($request->title, function ($query, $title) {
+                return $query->where('title', 'like', '%' . $title . '%');
+            })
+            ->when($request->tags, function ($query, $tags) {
+                return $query->whereHas('tags', function ($query) use ($tags) {
+                    $query->whereIn('tag_id', $tags);
+                });
+            })->paginate(2);
+    }
+
+    public function applySorting(Request $request, $recipes) {
+        switch ($request->sort) {
+            case 'rating_asc':
+                $recipes = $recipes->sortBy(function ($recipe) {
+                    return $recipe->countAverageRatingForRecipe();
+                });
+                break;
+            case 'rating_desc':
+                $recipes = $recipes->sortByDesc(function ($recipe) {
+                    return $recipe->countAverageRatingForRecipe();
+                });
+                break;
+        }
+        return $recipes;
     }
 }
