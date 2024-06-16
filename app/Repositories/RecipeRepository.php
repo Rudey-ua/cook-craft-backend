@@ -146,7 +146,7 @@ class RecipeRepository
         $query = Recipe::whereIn('recipes.user_id', $users)
             ->where('is_published', true)
             ->when($request->title, function ($query, $title) {
-                return $query->where('title', 'like', '%' . $title . '%');
+                return $query->where('recipes.title', 'like', '%' . $title . '%');
             })
             ->when($request->tags, function ($query, $tags) {
                 return $query->whereHas('tags', function ($query) use ($tags) {
