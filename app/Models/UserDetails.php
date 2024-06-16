@@ -13,6 +13,7 @@ class UserDetails extends Model
         'user_id',
         'birth_date',
         'gender',
+        'bio',
         'time_zone',
         'language',
     ];
