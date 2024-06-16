@@ -33,7 +33,6 @@ class RecipeController extends Controller
         $members = User::role(config('permission.user_roles.member'))->pluck('id');
 
         $recipes = $this->recipeRepository->getPublishedRecipesFromMembers($members, $request);
-        $recipes = $this->recipeRepository->applySorting($request, $recipes);
 
         return ShortRecipeResource::collection($recipes);
     }
@@ -80,7 +79,6 @@ class RecipeController extends Controller
         $chiefs = User::role(config('permission.user_roles.chief'))->pluck('id');
 
         $recipes = $this->recipeRepository->getPublishedRecipesFromMembers($chiefs, $request);
-        $recipes = $this->recipeRepository->applySorting($request, $recipes);
 
         return PremiumRecipeResource::collection($recipes);
     }
