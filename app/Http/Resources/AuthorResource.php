@@ -31,7 +31,7 @@ class AuthorResource extends JsonResource
             'id' => $this->id,
             'firstname' => $this->firstname,
             'lastname' => $this->lastname,
-            'bio' => $this->bio,
+            'bio' => $this->userDetails->bio,
             'profile_image' => $this->getProfileImageUrl($this->profile_image),
             'userDetails' => new UserDetailsResource($this->userDetails),
             'role' =>  $this->roles()->first()->name,
