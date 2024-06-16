@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->date('birth_date')->nullable();
+            $table->string('bio')->nullable();
             $table->enum('gender', ['male', 'female', 'other'])->nullable();
             $table->string('language')->nullable();
             $table->string('time_zone')->nullable();
