@@ -8,6 +8,7 @@ use App\Models\Recipe;
 use App\Models\Step;
 use App\Traits\FIleTrait;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -140,11 +141,10 @@ class RecipeRepository
         }
     }
 
-    public function getPublishedRecipesFromMembers(Collection $users, Request $request)
+    public function getPublishedRecipesFromMembers(Collection $users, Request $request): LengthAwarePaginator
     {
-        return Recipe::whereIn('user_id', $users)
+        $query = Recipe::whereIn('recipes.user_id', $users)
             ->where('is_published', true)
-
             ->when($request->title, function ($query, $title) {
                 return $query->where('title', 'like', '%' . $title . '%');
             })
@@ -152,22 +152,22 @@ class RecipeRepository
                 return $query->whereHas('tags', function ($query) use ($tags) {
                     $query->whereIn('tag_id', $tags);
                 });
-            })->paginate(2);
-    }
+            });
 
-    public function applySorting(Request $request, $recipes) {
         switch ($request->sort) {
             case 'rating_asc':
-                $recipes = $recipes->sortBy(function ($recipe) {
-                    return $recipe->countAverageRatingForRecipe();
-                });
+                $query->leftJoin('comments', 'recipes.id', '=', 'comments.recipe_id')
+                    ->selectRaw('recipes.*, AVG(comments.rate) as avg_rating')
+                    ->groupBy('recipes.id')
+                    ->orderBy('avg_rating', 'asc');
                 break;
             case 'rating_desc':
-                $recipes = $recipes->sortByDesc(function ($recipe) {
-                    return $recipe->countAverageRatingForRecipe();
-                });
+                $query->leftJoin('comments', 'recipes.id', '=', 'comments.recipe_id')
+                    ->selectRaw('recipes.*, AVG(comments.rate) as avg_rating')
+                    ->groupBy('recipes.id')
+                    ->orderBy('avg_rating', 'desc');
                 break;
         }
-        return $recipes;
+        return $query->paginate(2);
     }
 }
